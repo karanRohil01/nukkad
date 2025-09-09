@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gadgetNukkad - The Ultimate Mystery Box</title>
+    <meta name="description" content="Choose your Mystery Box! Subscribe for monthly surprises or grab a one-time box. Every box has a guaranteed 25% to 250% extra value.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Theme from Homepage */
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --primary-color: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary-color: #64748b;
+            --accent-color: #06d6a0;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --success-color: #10b981;
+            --white: #ffffff;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            --section-padding: 5rem 0;
+            --container-padding: 1.5rem;
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --border-radius-xl: 20px;
+        }
+        
+        /* --- Base & Typography --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-primary);
+            color: var(--gray-800);
+            background: var(--white);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        .container { padding-left: var(--container-padding); padding-right: var(--container-padding); max-width: 1320px; }
+        h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); line-height: 1.2; font-weight: 700; }
+        .text-premium {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .section-header { text-align: center; margin-bottom: 3.5rem; }
+        .section-title { font-size: 2.75rem; font-weight: 700; margin-bottom: 1rem; }
+        .section-subtitle { font-size: 1.125rem; color: var(--gray-600); max-width: 700px; margin: 0 auto; }
+
+        /* --- Reused Header & Footer Styles --- */
+        .btn { font-weight: 600; border-radius: var(--border-radius); padding: 0.875rem 1.75rem; font-size: 0.875rem; letter-spacing: 0.025em; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 2px solid transparent; position: relative; overflow: hidden; box-shadow: var(--shadow-sm); }
+        .btn-primary { background: var(--primary-gradient); color: white; box-shadow: var(--shadow-md); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-xl); color: white; }
+        .main-header { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px); border-bottom: 1px solid var(--gray-200); box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: 1000; }
+        .navbar-brand { font-family: var(--font-display); font-weight: 800; color: var(--primary-color) !important; text-decoration: none; font-size: 1.5rem; display: flex; align-items: center; }
+        .search-container { position: relative; max-width: 600px; width: 100%; }
+        .search-input { width: 100%; padding: 0.875rem 1rem 0.875rem 3rem; border: 2px solid var(--gray-200); border-radius: var(--border-radius-lg); font-size: 0.95rem; transition: all 0.3s ease; background: var(--gray-50); }
+        .search-input:focus { outline: none; border-color: var(--primary-color); background: white; box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1); }
+        .search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--gray-400); pointer-events: none; }
+        .search-btn { position: absolute; right: 4px; top: 4px; bottom: 4px; padding: 0 1rem; border: none; border-radius: calc(var(--border-radius-lg) - 4px); background: var(--primary-gradient); color: white; font-weight: 600; font-size: 0.875rem; }
+        .nav-actions { display: flex; align-items: center; gap: 1rem; }
+        .nav-link { color: var(--gray-600); text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; border-radius: var(--border-radius); transition: all 0.3s ease; font-size: 0.875rem; }
+        .nav-link:hover { color: var(--primary-color); background: var(--gray-50); }
+        .category-nav { background: var(--gray-900); padding: 0.875rem 0; }
+        .category-nav .nav { justify-content: center; }
+        .category-nav .nav-link { color: rgba(255, 255, 255, 0.8); padding: 0.625rem 1.25rem; border-radius: var(--border-radius); font-weight: 500; transition: all 0.3s ease; white-space: nowrap; font-size: 0.875rem; }
+        .category-nav .nav-link:hover { color: white; background: rgba(255, 255, 255, 0.1); transform: translateY(-1px); }
+        .footer { background: var(--gray-900); color: white; padding: 4.5rem 0 2.5rem; }
+        .footer h5 { font-weight: 700; margin-bottom: 1.75rem; color: white; font-size: 1.125rem; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 0.875rem; }
+        .footer-links a { color: rgba(255, 255, 255, 0.7); text-decoration: none; transition: color 0.3s ease; font-size: 0.95rem; }
+        .footer-links a:hover { color: white; }
+        .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); margin-top: 3.5rem; padding-top: 2.5rem; text-align: center; }
+
+        /* --- Mystery Box Page Specific Styles --- */
+        .guarantee-banner-card { background: linear-gradient(135deg, var(--gray-800), var(--gray-900)); color: var(--white); padding: 2.5rem; border-radius: var(--border-radius-xl); text-align: center; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease; height: 100%; display: flex; flex-direction: column; justify-content: center; }
+        .guarantee-banner-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-xl); }
+        .guarantee-banner-card .icon { font-size: 3rem; margin-bottom: 1rem; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .guarantee-banner-card h3 { color: var(--white); font-size: 1.75rem; }
+        .guarantee-banner-card p { color: var(--gray-300); }
+
+        .nav-pills .nav-link { color: var(--gray-700); font-weight: 600; padding: 0.75rem 2rem; border-radius: 50px; border: 2px solid transparent; }
+        .nav-pills .nav-link.active, .nav-pills .show > .nav-link { color: #fff; background: var(--primary-gradient); box-shadow: var(--shadow-md); }
+        .tab-content { margin-top: 3.5rem; }
+
+        .subscription-card { border: 1px solid var(--gray-200); transition: all 0.3s ease; height: 100%; display: flex; flex-direction: column; box-shadow: var(--shadow-md); border-radius: var(--border-radius-xl); }
+        .subscription-card.best-value { border-color: var(--warning-color); border-width: 2px; transform: scale(1.03); box-shadow: var(--shadow-xl); }
+        .subscription-card .highlight-badge { position: absolute; top: -1px; right: 2rem; background: var(--warning-color); color: var(--gray-900); padding: 0.3rem 1rem; font-size: 0.8rem; font-weight: 700; border-radius: 0 0 var(--border-radius) var(--border-radius); }
+        .subscription-card h3 { font-size: 1.75rem; }
+        .subscription-card .price { font-size: 2.75rem; font-family: var(--font-display); font-weight: 700; }
+        .subscription-card .price-per-box { font-weight: 600; color: var(--primary-color); margin-top: -0.5rem; margin-bottom: 1.5rem; }
+        .subscription-card ul { list-style: none; padding: 0; margin-bottom: 2rem; flex-grow: 1; }
+        .subscription-card ul li { margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem; }
+        .subscription-card ul i { color: var(--success-color); }
+
+        .box-card { text-align: center; border: 1px solid var(--gray-200); transition: all 0.3s ease; height: 100%; display: flex; flex-direction: column; border-radius: var(--border-radius-lg); overflow: hidden; }
+        .box-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-xl); border-color: var(--primary-color); }
+        .box-card-img { width: 100%; height: 160px; object-fit: cover; }
+        .box-card-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .box-card h4 { font-size: 1.25rem; font-weight: 600; }
+        .box-card .price { font-size: 2rem; font-weight: 700; font-family: var(--font-display); color: var(--primary-dark); margin: 0.5rem 0; }
+        .box-card .value-guarantee { font-size: 0.85rem; color: var(--gray-600); margin-top: 0.5rem; margin-bottom: 1.5rem; }
+        .box-card .value-guarantee strong { color: var(--primary-color); }
+        .box-card .btn { margin-top: auto; }
+        
+        .how-it-works-card { background: var(--white); border-radius: var(--border-radius-lg); text-align: center; border: 1px solid var(--gray-200); transition: all 0.3s ease; height: 100%; box-shadow: var(--shadow-sm); overflow: hidden; }
+        .how-it-works-card:hover { border-color: var(--primary-color); transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .how-it-works-img { width: 100%; height: 180px; object-fit: cover; }
+        .how-it-works-card .card-content { padding: 2rem 1.5rem; }
+
+        .brands-section { background-color: var(--gray-50); }
+        .brands-grid { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 2.5rem; }
+        /* Accurate SVG logos */
+        .brand-logo svg { height: 35px; max-width: 120px; width: auto; fill: var(--gray-400); transition: fill 0.3s ease; }
+        .brand-logo:hover svg { fill: var(--primary-color); }
+
+        .faq-item { background: var(--white); border-radius: var(--border-radius); margin-bottom: 1rem; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200); }
+        .faq-question { padding: 1.5rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .faq-question::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; transition: transform 0.3s ease; color: var(--primary-color); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.2s ease; padding: 0 1.5rem; }
+        .faq-item.active { border-color: var(--primary-color); }
+        .faq-item.active .faq-answer { max-height: 300px; padding: 0 1.5rem 1.5rem 1.5rem; }
+        .faq-item.active .faq-question::after { transform: rotate(180deg); }
+
+        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 3.5rem; height: 3.5rem; background: var(--primary-gradient); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .back-to-top:hover { transform: translateY(-5px); box-shadow: var(--shadow-2xl); color: white; }
+        
+        .fade-in-section { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .fade-in-section.is-visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 991.98px) {
+            .section-title { font-size: 2.5rem; }
+            .subscription-card.best-value { transform: scale(1); }
+        }
+        @media (max-width: 767.98px) {
+            :root { --section-padding: 3.5rem 0; }
+            .section-title { font-size: 2.25rem; }
+            .nav-pills { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+            .nav-pills::-webkit-scrollbar { display: none; }
+            .nav-pills .nav-link { padding: 0.5rem 1.25rem; font-size: 0.9rem; white-space: nowrap;}
+            .box-card-content { padding: 1.25rem; }
+            .box-card .price { font-size: 1.75rem; }
+            .subscription-card .price { font-size: 2.25rem; }
+            .guarantee-banner-card { padding: 2rem; }
+            .guarantee-banner-card h3 { font-size: 1.5rem; }
+            .brand-logo svg { height: 30px; }
+        }
+        @media (max-width: 575.98px) {
+            :root { --section-padding: 3rem 0; --container-padding: 1rem; }
+            .section-title { font-size: 2rem; }
+            .box-card h4 { font-size: 1.1rem; }
+            .box-card .price { font-size: 1.5rem; }
+            .box-card .value-guarantee { font-size: 0.8rem; }
+            .box-card-img { height: 120px; }
+            .brands-grid { gap: 1.5rem; }
+            .brand-logo svg { height: 25px; max-width: 80px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="d-none d-lg-block">
+            <div class="container">
+                <div class="row align-items-center py-3">
+                    <div class="col-2"><a href="index.html" class="navbar-brand"><i class="fas fa-microchip me-2"></i>gadgetNukkad</a></div>
+                    <div class="col-6"><div class="search-container"><i class="fas fa-search search-icon"></i><input type="text" class="search-input" placeholder="Search for premium gadgets..."><button class="search-btn"><i class="fas fa-search"></i></button></div></div>
+                    <div class="col-4"><div class="nav-actions justify-content-end"><div class="dropdown"><a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-user"></i><span>Account</span></a><ul class="dropdown-menu dropdown-menu-end"><li><a class="dropdown-item" href="#"><i class="fas fa-sign-in-alt me-2"></i>Login</a></li><li><a class="dropdown-item" href="#"><i class="fas fa-user-plus me-2"></i>Sign Up</a></li><li><hr class="dropdown-divider"></li><li><a class="dropdown-item" href="#"><i class="fas fa-box me-2"></i>My Orders</a></li></ul></div><a href="#" class="nav-link"><i class="fas fa-heart"></i><span>Wishlist</span><span class="badge bg-danger ms-1">3</span></a><a href="#" class="nav-link"><i class="fas fa-shopping-cart"></i><span>Cart</span><span class="badge bg-success ms-1">2</span></a></div></div>
+                </div>
+            </div>
+        </div>
+        <div class="d-lg-none"><div class="container"><nav class="navbar navbar-expand-lg py-2"><a href="index.html" class="navbar-brand"><i class="fas fa-microchip me-1"></i>gadgetNukkad</a><div class="d-flex align-items-center gap-2"><button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search"></i></button><button class="btn btn-outline-secondary btn-sm" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu"><i class="fas fa-bars"></i></button></div></nav></div></div>
+        <nav class="category-nav d-none d-lg-block">
+            <div class="container">
+                <ul class="nav">
+                    <li class="nav-item"><a class="nav-link" href="index.html#deals"><i class="fas fa-fire me-1"></i>Hot Deals</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#mobiles"><i class="fas fa-mobile-alt me-1"></i>Mobiles</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#audio"><i class="fas fa-headphones me-1"></i>Audio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#kitchen"><i class="fas fa-utensils me-1"></i>Kitchen</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#smart-home"><i class="fas fa-home me-1"></i>Smart Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#gaming"><i class="fas fa-gamepad me-1"></i>Gaming</a></li>
+                    <li class="nav-item"><a class="nav-link" href="mysterybox.html"><i class="fas fa-gift me-1"></i>Mystery Box</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu"><div class="offcanvas-header"><h5 class="offcanvas-title"><i class="fas fa-microchip me-2"></i>Menu</h5><button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button></div><div class="offcanvas-body"><div class="mb-4"><h6 class="text-uppercase fw-bold text-muted small mb-3">Account</h6><nav class="nav flex-column"><a class="nav-link" href="#"><i class="fas fa-sign-in-alt me-2"></i>Login</a><a class="nav-link" href="#"><i class="fas fa-user-plus me-2"></i>Sign Up</a><a class="nav-link" href="#"><i class="fas fa-box me-2"></i>My Orders</a><a class="nav-link" href="#"><i class="fas fa-heart me-2"></i>Wishlist</a><a class="nav-link" href="#"><i class="fas fa-shopping-cart me-2"></i>Cart</a></nav></div><div><h6 class="text-uppercase fw-bold text-muted small mb-3">Categories</h6><nav class="nav flex-column"><a class="nav-link" href="index.html#deals"><i class="fas fa-fire me-2"></i>Hot Deals</a><a class="nav-link" href="index.html#mobiles"><i class="fas fa-mobile-alt me-2"></i>Mobiles</a><a class="nav-link" href="index.html#audio"><i class="fas fa-headphones me-2"></i>Audio</a><a class="nav-link" href="index.html#kitchen"><i class="fas fa-utensils me-2"></i>Kitchen</a><a class="nav-link" href="index.html#smart-home"><i class="fas fa-home me-2"></i>Smart Home</a><a class="nav-link" href="index.html#gaming"><i class="fas fa-gamepad me-2"></i>Gaming</a><a class="nav-link" href="mysterybox.html"><i class="fas fa-gift me-2"></i>Mystery Box</a></nav></div></div></div>
+    <div class="modal fade" id="searchModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title"><i class="fas fa-search me-2"></i>Search Products</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="search-container"><i class="fas fa-search search-icon"></i><input type="text" class="search-input" placeholder="Search for products..."><button class="search-btn">Search</button></div></div></div></div></div>
+    <div class="modal fade" id="loginRequiredModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title"><i class="fas fa-lock me-2"></i>Login Required</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><p>Please log in or create an account to continue.</p></div><div class="modal-footer"><a href="#" class="btn btn-primary"><i class="fas fa-sign-in-alt me-2"></i>Login</a><a href="#" class="btn btn-outline-primary"><i class="fas fa-user-plus me-2"></i>Sign Up</a></div></div></div></div>
+
+    <main>
+        <section class="py-5 bg-light">
+             <div class="container">
+                <div class="row g-4 fade-in-section">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <div class="guarantee-banner-card">
+                            <div class="icon"><i class="fas fa-shield-alt"></i></div>
+                            <h3>Unbeatable Value Guarantee</h3>
+                            <p>This is not a gamble. The retail value of the items in your box is guaranteed to be **25% to 250% higher** than what you paid. You always get more than your money's worth.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="guarantee-banner-card">
+                            <div class="icon"><i class="fas fa-ticket-alt"></i></div>
+                            <h3>The 1-in-100 Jackpot</h3>
+                            <p>It's your golden ticket. For every 100 boxes sold, one lucky customer will receive an **exclusive bumper prize** like a flagship phone or a gaming console!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="choose-your-box" class="py-5">
+            <div class="container fade-in-section">
+                <div class="section-header">
+                    <h2 class="section-title">Choose Your <span class="text-premium">Mystery Box</span></h2>
+                    <p class="section-subtitle">Select the perfect surprise. Subscribe for the best value and monthly thrills, or grab a one-time box for a taste of the excitement.</p>
+                </div>
+                <ul class="nav nav-pills justify-content-center mb-4" id="boxTabs" role="tablist">
+                    <li class="nav-item" role="presentation"><button class="nav-link active" id="subscriptions-tab" data-bs-toggle="pill" data-bs-target="#subscriptions" type="button" role="tab" aria-controls="subscriptions" aria-selected="true"><i class="fas fa-calendar-alt me-2"></i>Subscriptions</button></li>
+                    <li class="nav-item" role="presentation"><button class="nav-link" id="one-time-tab" data-bs-toggle="pill" data-bs-target="#one-time" type="button" role="tab" aria-controls="one-time" aria-selected="false"><i class="fas fa-box me-2"></i>One-Time Boxes</button></li>
+                </ul>
+
+                <div class="tab-content" id="boxTabsContent">
+                    <div class="tab-pane fade show active" id="subscriptions" role="tabpanel" aria-labelledby="subscriptions-tab">
+                        <div class="row justify-content-center g-4">
+                            <div class="col-lg-5 col-md-6"><div class="card p-4 subscription-card"><h3 class="font-display">6-Month Plan</h3><div class="price">₹7,500</div><p class="price-per-box">That's only ₹1,250 per box!</p><ul><li><i class="fas fa-check-circle"></i>One Mystery Box delivered monthly</li><li><i class="fas fa-check-circle"></i>Guaranteed 25% to 250% value</li><li><i class="fas fa-check-circle"></i>Eligible for the 1-in-100 Jackpot</li></ul><a href="#" class="btn btn-primary w-100 mt-auto">Subscribe for 6 Months</a></div></div>
+                            <div class="col-lg-5 col-md-6"><div class="card p-4 subscription-card best-value"><div class="highlight-badge">BEST VALUE</div><h3 class="font-display">1-Year Plan</h3><div class="price">₹12,000</div><p class="price-per-box">That's only ₹1,000 per box!</p><ul><li><i class="fas fa-check-circle"></i>One Mystery Box delivered monthly</li><li><i class="fas fa-check-circle"></i>Guaranteed 25% to 250% value</li><li><i class="fas fa-check-circle"></i>Eligible for the 1-in-100 Jackpot</li></ul><a href="#" class="btn btn-primary w-100 mt-auto">Subscribe for 1 Year</a></div></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="one-time" role="tabpanel" aria-labelledby="one-time-tab">
+                        <div class="row g-3 g-md-4">
+                            <div class="col-6 col-lg-4"><div class="box-card"><img src="https://images.unsplash.com/photo-1581431369533-3d2b2c342a78?q=80&w=2070&auto=format&fit=crop" alt="Starter Mystery Box" class="box-card-img" loading="lazy"><div class="box-card-content"><h4>Starter Box</h4><p class="price">₹699</p><p class="value-guarantee">Value: <strong>₹870 - ₹1,750</strong></p><a href="#" class="btn btn-primary w-100">Buy Now</a></div></div></div>
+                            <div class="col-6 col-lg-4"><div class="box-card"><img src="https://images.unsplash.com/photo-1579548122080-c35162794def?q=80&w=2070&auto=format&fit=crop" alt="Explorer Mystery Box" class="box-card-img" loading="lazy"><div class="box-card-content"><h4>Explorer Box</h4><p class="price">₹1,249</p><p class="value-guarantee">Value: <strong>₹1,560 - ₹3,120</strong></p><a href="#" class="btn btn-primary w-100">Buy Now</a></div></div></div>
+                            <div class="col-6 col-lg-4"><div class="box-card"><img src="https://images.unsplash.com/photo-1579547945413-497e1b991e61?q=80&w=2070&auto=format&fit=crop" alt="Pro Mystery Box" class="box-card-img" loading="lazy"><div class="box-card-content"><h4>Pro Box</h4><p class="price">₹1,999</p><p class="value-guarantee">Value: <strong>₹2,500 - ₹5,000</strong></p><a href="#" class="btn btn-primary w-100">Buy Now</a></div></div></div>
+                            <div class="col-6 col-lg-4"><div class="box-card"><img src="https://images.unsplash.com/photo-1554034483-04aff2358e78?q=80&w=1974&auto=format&fit=crop" alt="Pro Plus Mystery Box" class="box-card-img" loading="lazy"><div class="box-card-content"><h4>Pro Plus Box</h4><p class="price">₹2,499</p><p class="value-guarantee">Value: <strong>₹3,120 - ₹6,250</strong></p><a href="#" class="btn btn-primary w-100">Buy Now</a></div></div></div>
+                            <div class="col-6 col-lg-4"><div class="box-card"><img src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2070&auto=format&fit=crop" alt="Elite Mystery Box" class="box-card-img" loading="lazy"><div class="box-card-content"><h4>Elite Box</h4><p class="price">₹3,499</p><p class="value-guarantee">Value: <strong>₹4,370 - ₹8,750</strong></p><a href="#" class="btn btn-primary w-100">Buy Now</a></div></div></div>
+                            <div class="col-6 col-lg-4"><div class="box-card"><img src="https://images.unsplash.com/photo-1579546929662-711aa81148e9?q=80&w=2070&auto=format&fit=crop" alt="Ultimate Mystery Box" class="box-card-img" loading="lazy"><div class="box-card-content"><h4>Ultimate Box</h4><p class="price">₹4,999</p><p class="value-guarantee">Value: <strong>₹6,250 - ₹12,500</strong></p><a href="#" class="btn btn-primary w-100">Buy Now</a></div></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="brands-section py-5">
+            <div class="container fade-in-section">
+                <div class="section-header">
+                    <h2 class="section-title">Brands You Can Trust</h2>
+                    <p class="section-subtitle">Your mystery box could contain products from these industry-leading brands and more.</p>
+                </div>
+                <div class="brands-grid">
+                    <div class="brand-logo" title="Apple"><svg viewBox="0 0 24 24"><path d="M19.1,13c-0.3,2.4-2.2,4.3-4.5,4.3c-1.2,0-2-0.7-3.1-0.7c-1.1,0-2.2,0.8-3.3,0.8c-2.5,0-4.7-2.3-4.7-5.5 c0-3.3,2.6-4.9,4.9-4.9c1.2,0,2.1,0.7,3.1,0.7c1,0,1.9-0.8,3.2-0.8c1,0,2.9,0.4,4,2C19.2,11,19.1,13,19.1,13z M14.6,8.2 c0.6-0.8,1-1.9,0.9-2.9c-0.9,0-2.1,0.6-2.8,1.4c-0.6,0.7-1.2,1.9-1,2.9C12.7,9.6,13.9,9,14.6,8.2z"/></svg></div>
+                    <div class="brand-logo" title="Samsung"><svg viewBox="0 0 512 512"><path d="M103.21,51.19,103.21,51.19,103.21,51.19,65.43,22.25,65.43,186.44l242.13,140.23L446.79,22.25h-91.1L277,100.67,198.37,22.25h-95.16v132.3L277,243.34l112.42-65.34V22.25H406L277,100.67,148.06,22.25H103.2v97.16l173.81,100.5L446.79,83.08v245.84L277,430.75,103.21,328.92V231.76L277,332.28,406,266.52V83.08l-129,74.62-173.8-100.5Z"/></svg></div>
+                    <div class="brand-logo" title="Sony"><svg viewBox="0 0 256 256"><path d="M211.5,128a83.5,83.5,0,0,0-167,0,83.5,83.5,0,0,0,167,0ZM128,216a88,88,0,1,0-88-88,88,88,0,0,0,88,88Z M128,40a88,88,0,0,0-88,88,88.1,88.1,0,0,0,1,12.5A83.6,83.6,0,0,1,128,44.5a83.5,83.5,0,0,1,82.5,83.5A88.1,88.1,0,0,0,216,128,88,88,0,0,0,128,40Z"/></svg></div>
+                    <div class="brand-logo" title="Vivo"><svg viewBox="0 0 50 25"><path d="m23.54 1.79-1.94 4.54-6.81-4.54h-5.4l10.95 18.6h4.08L35.23 1.79h-5.4l-6.29 4.54-1.94-4.54h-4.08"/></svg></div>
+                    <div class="brand-logo" title="Marshall"><svg viewBox="0 0 100 25"><path d="m14.28 15.22 1.34-0.12c2.05-0.19 3.32-1.63 3.32-3.48 0-1.85-1.27-3.28-3.32-3.48L14.28 8h-3.46l-0.08 1.48c-0.29 5.25-1.23 7.6-3.83 7.6-1.57 0-2.31-0.9-2.31-2.41s0.82-2.54 2.4-2.54c0.59 0 1 0.14 1.25 0.25l0.39-1.29c-0.34-0.16-1.03-0.34-1.91-0.34-2.85 0-4.41 2.22-4.41 4.54s1.7 4.17 4.3 4.17c3.41 0 4.86-3.13 5.2-7.55h0.04c0.35 4.41 1.78 7.55 5.2 7.55 2.61 0 4.3-1.94 4.3-4.17s-1.56-4.54-4.41-4.54c-0.88 0-1.57 0.18-1.91 0.34l0.39 1.29c0.25-0.11 0.66-0.25 1.25-0.25 1.58 0 2.4 1.13 2.4 2.54s-0.74 2.41-2.31 2.41c-2.6 0-3.54-2.35-3.83-7.6l-0.08-1.48h-3.46zm14.49-7.22h3.48l-6.84 14.2h-3.48l6.84-14.2zm10.7 0h3.48l-6.84 14.2h-3.48l6.84-14.2zM52 8h3.35l-4.22 7.11 4.22 7.09h-3.35l-2.56-4.83-2.56 4.83h-3.35l4.22-7.09-4.22-7.11h3.35l2.56 4.83 2.56-4.83zm18.3 7.16c-0.06 2.08 0.41 3.25 1.42 3.25 0.5 0 0.81-0.19 0.97-0.36l0.34 1.17c-0.3 0.25-0.89 0.48-1.68 0.48-2.09 0-3.03-1.89-3.03-4.22s0.81-4.54 3.03-4.54c1.9 0 2.87 1.5 2.87 4.13h-3.92zm2.02-1.2h-0.11c-0.04-1.12-0.53-1.89-1.39-1.89-0.9 0-1.41 0.88-1.41 1.89h2.91zm6.04 1.2h3.92c-0.12-2.63-1.08-4.13-2.87-4.13-2.22 0-3.03 2.22-3.03 4.54s0.94 4.22 3.03 4.22c0.79 0 1.38-0.23 1.68-0.48l-0.34-1.17c-0.16 0.17-0.47 0.36-0.97 0.36-1.01 0-1.48-1.17-1.42-3.25h0.11zm8.01 0.12 1.34-0.12c2.05-0.19 3.32-1.63 3.32-3.48 0-1.85-1.27-3.28-3.32-3.48L89.28 8h-3.46l-0.08 1.48c-0.29 5.25-1.23 7.6-3.83 7.6-1.57 0-2.31-0.9-2.31-2.41s0.82-2.54 2.4-2.54c0.59 0 1 0.14 1.25 0.25l0.39-1.29c-0.34-0.16-1.03-0.34-1.91-0.34-2.85 0-4.41 2.22-4.41 4.54s1.7 4.17 4.3 4.17c3.41 0 4.86-3.13 5.2-7.55h0.04c0.35 4.41 1.78 7.55 5.2 7.55 2.61 0 4.3-1.94 4.3-4.17s-1.56-4.54-4.41-4.54c-0.88 0-1.57 0.18-1.91 0.34l0.39 1.29c0.25-0.11 0.66-0.25 1.25-0.25 1.58 0 2.4 1.13 2.4 2.54s-0.74 2.41-2.31 2.41c-2.6 0-3.54-2.35-3.83-7.6l-0.08-1.48h-3.46z"/></svg></div>
+                    <div class="brand-logo" title="Xiaomi (Mi)"><svg viewBox="0 0 24 24"><path d="M11 16.5h2v-5h-2v5Zm-4 0h2v-5H7v5Zm8-11.5v11h2V5h-2Zm4.5 15.5V4h-15v16h15Z"/></svg></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5">
+            <div class="container fade-in-section">
+                <div class="section-header">
+                    <h2 class="section-title">How It Works</h2>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-4 col-md-4"><div class="how-it-works-card"><img src="https://images.unsplash.com/photo-1558522195-e127923214e2?q=80&w=2070&auto=format&fit=crop" alt="Choose a box" class="how-it-works-img" loading="lazy"><div class="card-content"><h5 class="fw-bold mb-1">1. Choose Your Box</h5><p class="text-muted mb-0">Select a subscription or a one-time box that fits your budget.</p></div></div></div>
+                    <div class="col-lg-4 col-md-4"><div class="how-it-works-card"><img src="https://images.unsplash.com/photo-1566576721346-d4a3b4ea9548?q=80&w=1974&auto=format&fit=crop" alt="Experts curate the box" class="how-it-works-img" loading="lazy"><div class="card-content"><h5 class="fw-bold mb-1">2. We Curate Your Surprise</h5><p class="text-muted mb-0">Our experts hand-pick premium gadgets from top brands.</p></div></div></div>
+                    <div class="col-lg-4 col-md-4"><div class="how-it-works-card"><img src="https://images.unsplash.com/photo-1600171449177-3315b6755866?q=80&w=2070&auto=format&fit=crop" alt="Unbox amazing tech" class="how-it-works-img" loading="lazy"><div class="card-content"><h5 class="fw-bold mb-1">3. Unbox Amazing Tech</h5><p class="text-muted mb-0">Receive your box and enjoy your new high-value gadgets!</p></div></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="py-5 bg-light">
+            <div class="container fade-in-section" style="max-width: 900px;">
+                <div class="section-header"><h2 class="section-title">Frequently Asked Questions</h2></div>
+                <div class="faq-container">
+                    <div class="faq-item"><div class="faq-question">How is the value guarantee calculated?</div><div class="faq-answer"><p>We calculate the total value based on the current Manufacturer's Suggested Retail Price (MSRP) of the items in your box. We guarantee the total MSRP will be 25% to 250% greater than your purchase price.</p></div></div>
+                    <div class="faq-item"><div class="faq-question">What kind of products can I expect?</div><div class="faq-answer"><p>Our boxes contain a wide range of premium electronics from top brands. This can include headphones, smartwatches, gaming accessories, smart home devices, high-quality chargers, and more. The value and type of items scale with the price of the box you choose.</p></div></div>
+                    <div class="faq-item"><div class="faq-question">How does the 1-in-100 Jackpot work?</div><div class="faq-answer"><p>For every 100 mystery boxes sold across all tiers, our system randomly designates one order as a Jackpot winner. That box will include an extra, high-value bumper gift! Winners are notified via a special golden ticket inside their box!</p></div></div>
+                    <div class="faq-item"><div class="faq-question">Can I return my Mystery Box?</div><div class="faq-answer"><p>Due to the nature of the mystery and the guaranteed value, all Mystery Box sales are final and cannot be returned. However, if an item is defective, it is covered by our standard warranty policy.</p></div></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container"><div class="row g-4"><div class="col-lg-4 col-md-6"><h3 class="h5 fw-bold mb-3"><i class="fas fa-microchip me-2 text-primary"></i>gadgetNukkad</h3><p class="mb-3 opacity-75">Hisar's premier destination for premium technology since 2019.</p><div class="d-flex gap-2"><a href="#" class="btn btn-outline-light btn-sm"><i class="fab fa-facebook-f"></i></a><a href="#" class="btn btn-outline-light btn-sm"><i class="fab fa-instagram"></i></a><a href="#" class="btn btn-outline-light btn-sm"><i class="fab fa-whatsapp"></i></a></div></div><div class="col-lg-2 col-md-3 col-sm-6"><h5>Shop</h5><ul class="footer-links"><li><a href="index.html#mobiles">Mobiles</a></li><li><a href="index.html#audio">Audio</a></li><li><a href="index.html#kitchen">Kitchen</a></li><li><a href="index.html#smart-home">Smart Home</a></li><li><a href="index.html#gaming">Gaming</a></li></ul></div><div class="col-lg-2 col-md-3 col-sm-6"><h5>Support</h5><ul class="footer-links"><li><a href="#">Help Center</a></li><li><a href="#">Track Order</a></li><li><a href="#">Returns</a></li><li><a href="#">Warranty</a></li><li><a href="#">Contact</a></li></ul></div><div class="col-lg-4 col-md-6"><h5>Contact Info</h5><div class="row"><div class="col-sm-6"><p class="mb-2"><i class="fas fa-map-marker-alt me-1 text-primary"></i>Model Town Market<br>Hisar, Haryana - 125001</p></div><div class="col-sm-6"><p class="mb-2"><i class="fas fa-phone me-1 text-primary"></i>Sales: +91 98765 43210<br>Support: +91 98765 43211</p></div></div><p class="opacity-75 mb-0">Open: 10 AM - 9 PM (Mon-Sun)</p></div></div><div class="footer-bottom"><p class="mb-0 opacity-75">&copy; 2025 gadgetNukkad. All rights reserved.</p></div></div>
+    </footer>
+    
+    <a href="#" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- FAQ Accordion Logic ---
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    const currentlyActive = document.querySelector('.faq-item.active');
+                    if (currentlyActive && currentlyActive !== item) {
+                        currentlyActive.classList.remove('active');
+                    }
+                    item.classList.toggle('active');
+                });
+            });
+            
+            // --- Back to Top Button ---
+            const backToTopButton = document.getElementById('backToTop');
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+            backToTopButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // --- Premium Scroll Animation Logic ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.1
+            });
+
+            const elementsToAnimate = document.querySelectorAll('.fade-in-section');
+            elementsToAnimate.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
