@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +13,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-
     <style>
         :root {
             /* Premium Color Palette */
@@ -52,27 +50,37 @@
             --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
             
-            /* Spacing */
+            /* Responsive spacing */
+            --section-padding: 5rem 0;
+            --container-padding: 1.5rem;
             --border-radius: 12px;
             --border-radius-lg: 16px;
             --border-radius-xl: 20px;
         }
-
+        
         /* Base Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
             font-family: var(--font-primary);
             color: var(--gray-800);
             background: var(--white);
             line-height: 1.6;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
-
+        
+        /* Container responsive padding */
+        .container {
+            padding-left: var(--container-padding);
+            padding-right: var(--container-padding);
+            max-width: 1320px;
+        }
+        
         /* Typography */
         .font-display { font-family: var(--font-display); }
         
@@ -81,36 +89,28 @@
             line-height: 1.2;
             font-weight: 600;
         }
-
-        .display-1, .display-2, .display-3 {
-            font-weight: 800;
-            letter-spacing: -0.025em;
-        }
-
+        
         .text-premium {
             background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
-        .text-accent {
-            color: var(--accent-color);
-        }
-
+        
         /* Premium Buttons */
         .btn {
             font-weight: 600;
             border-radius: var(--border-radius);
-            padding: 0.75rem 1.5rem;
-            font-size: 0.95rem;
+            padding: 0.875rem 1.75rem;
+            font-size: 0.875rem;
             letter-spacing: 0.025em;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 2px solid transparent;
             position: relative;
             overflow: hidden;
+            box-shadow: var(--shadow-sm);
         }
-
+        
         .btn::before {
             content: '';
             position: absolute;
@@ -121,53 +121,77 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
             transition: left 0.5s;
         }
-
+        
         .btn:hover::before {
             left: 100%;
         }
-
+        
         .btn-primary {
             background: var(--primary-gradient);
             color: white;
             box-shadow: var(--shadow-md);
         }
-
+        
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-xl);
             color: white;
         }
-
+        
         .btn-outline-primary {
             border-color: var(--primary-color);
             color: var(--primary-color);
         }
-
+        
         .btn-outline-primary:hover {
             background: var(--primary-color);
             border-color: var(--primary-color);
             color: white;
             transform: translateY(-2px);
         }
-
+        
         .btn-success {
             background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
             color: white;
         }
-
-        .btn-lg {
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
+        
+        /* Professional Add to Cart Button */
+        .btn-add-cart {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 0.625rem 1rem;
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
+            position: relative;
+            overflow: hidden;
+            font-size: 0.8rem;
         }
-
-        .btn-sm {
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
+        
+        .btn-add-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.4);
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
         }
-
+        
+        .btn-add-cart:active {
+            transform: translateY(0);
+        }
+        
+        .btn-add-cart i {
+            margin-right: 0.375rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn-add-cart:hover i {
+            transform: translateX(3px);
+        }
+        
         /* Header Styles */
         .main-header {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--gray-200);
             box-shadow: var(--shadow-sm);
@@ -175,38 +199,40 @@
             top: 0;
             z-index: 1000;
         }
-
+        
         .navbar-brand {
             font-family: var(--font-display);
             font-weight: 800;
-            font-size: 1.5rem;
             color: var(--primary-color) !important;
             text-decoration: none;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
         }
-
+        
         .search-container {
             position: relative;
             max-width: 600px;
             width: 100%;
         }
-
+        
         .search-input {
             width: 100%;
-            padding: 0.75rem 1rem 0.75rem 3rem;
+            padding: 0.875rem 1rem 0.875rem 3rem;
             border: 2px solid var(--gray-200);
             border-radius: var(--border-radius-lg);
             font-size: 0.95rem;
             transition: all 0.3s ease;
             background: var(--gray-50);
         }
-
+        
         .search-input:focus {
             outline: none;
             border-color: var(--primary-color);
             background: white;
             box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
         }
-
+        
         .search-icon {
             position: absolute;
             left: 1rem;
@@ -215,26 +241,27 @@
             color: var(--gray-400);
             pointer-events: none;
         }
-
+        
         .search-btn {
             position: absolute;
             right: 4px;
             top: 4px;
             bottom: 4px;
-            padding: 0 1.25rem;
+            padding: 0 1rem;
             border: none;
             border-radius: calc(var(--border-radius-lg) - 4px);
             background: var(--primary-gradient);
             color: white;
             font-weight: 600;
+            font-size: 0.875rem;
         }
-
+        
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 1rem;
         }
-
+        
         .nav-link {
             color: var(--gray-600);
             text-decoration: none;
@@ -242,383 +269,257 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 0.75rem;
             border-radius: var(--border-radius);
             transition: all 0.3s ease;
+            font-size: 0.875rem;
         }
-
+        
         .nav-link:hover {
             color: var(--primary-color);
             background: var(--gray-50);
         }
-
+        
         /* Category Navigation */
         .category-nav {
             background: var(--gray-900);
-            padding: 0;
+            padding: 0.875rem 0;
         }
-
+        
         .category-nav .nav {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             gap: 0.5rem;
-            padding: 1rem 0;
         }
-
+        
         .category-nav .nav-link {
             color: rgba(255, 255, 255, 0.8);
-            padding: 0.75rem 1.5rem;
+            padding: 0.625rem 1.25rem;
             border-radius: var(--border-radius);
             font-weight: 500;
             transition: all 0.3s ease;
             white-space: nowrap;
+            font-size: 0.875rem;
         }
-
+        
         .category-nav .nav-link:hover {
             color: white;
             background: rgba(255, 255, 255, 0.1);
             transform: translateY(-1px);
         }
-
-        /* Hero Section */
+        
+        /* Hero Section - Premium & Responsive */
         .hero-section {
             padding: 4rem 0;
             overflow: hidden;
-        }
-
-        .hero-slide {
-            border-radius: var(--border-radius-xl);
-            overflow: hidden;
+            background: linear-gradient(135deg, #f8faff 0%, #e6f3ff 50%, #d4edff 100%);
             position: relative;
         }
         
-        .hero-slide-1 {
-            background: linear-gradient(135deg, #f8faff 0%, #e6f3ff 50%, #d4edff 100%);
-        }
-
-        .hero-slide-2 {
-            background: linear-gradient(135deg, #fef7ff 0%, #f3e8ff 50%, #e9d5ff 100%);
-        }
-
-        .hero-content {
-            padding: 4rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-image {
-            position: relative;
-            padding: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hero-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
-            border-radius: var(--border-radius-xl);
-        }
-
-        .hero-image img {
-            max-width: 100%;
-            max-height: 450px;
-            object-fit: contain;
-            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15));
-        }
-
-        /* Feature Cards */
-        .features-section {
-            padding: 5rem 0;
-            background: var(--gray-50);
-        }
-
-        .feature-card {
-            background: white;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--border-radius-lg);
-            padding: 2.5rem 2rem;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
+        .hero-section::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%236366f1' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='m0 60 60-60h-60v60zm60 0v-60h-60l60 60z'/%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+        
+        .hero-slide {
+            border-radius: var(--border-radius-xl);
+            overflow: hidden;
+            position: relative;
+            background: transparent;
+        }
+        
+        .hero-slide-2 {
+            background: linear-gradient(135deg, #fef7ff 0%, #f3e8ff 50%, #e9d5ff 100%);
+        }
+        
+        .hero-content {
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-image {
+            position: relative;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            max-height: 450px;
+            object-fit: contain;
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.2));
+            transition: transform 0.5s ease;
+        }
+        
+        .hero-slide:hover .hero-image img {
+            transform: scale(1.05);
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            padding: 0.625rem 1.25rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 1.25rem;
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* Banner Sections */
+        .banner-section {
+            padding: 3rem 0;
+        }
+        
+        .promo-banner {
             background: var(--primary-gradient);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
+            border-radius: var(--border-radius-xl);
+            color: white;
+            text-align: center;
+            padding: 3.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
         }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-2xl);
-            border-color: var(--primary-color);
+        
+        .promo-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='m0 40 40-40h-40v40zm40 0v-40h-40l40 40z'/%3E%3C/g%3E%3C/svg%3E");
         }
-
-        .feature-card:hover::before {
-            transform: scaleX(1);
+        
+        .promo-content {
+            position: relative;
+            z-index: 2;
         }
-
-        .feature-icon {
-            width: 5rem;
-            height: 5rem;
-            background: var(--primary-gradient);
+        
+        .service-banner {
+            background: var(--gray-50);
             border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            text-align: center;
+            border: 2px solid var(--gray-200);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .service-banner:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .service-icon {
+            width: 4.5rem;
+            height: 4.5rem;
+            background: var(--primary-gradient);
+            border-radius: var(--border-radius);
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 1.5rem;
             color: white;
-            font-size: 1.5rem;
-            box-shadow: var(--shadow-lg);
+            font-size: 1.75rem;
         }
-
-        /* Deal Section */
-        .deal-section {
-            padding: 5rem 0;
-        }
-
-        .deal-card {
-            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 50%, #fdcb6e 100%);
-            border-radius: var(--border-radius-xl);
-            padding: 3rem;
-            box-shadow: var(--shadow-xl);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .deal-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='m0 40 40-40h-40v40zm40 0v-40h-40l40 40z'/%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.3;
-        }
-
-        .deal-image-container {
-            position: relative;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: var(--border-radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 300px;
-        }
-
-        .deal-image {
-            max-width: 100%;
-            max-height: 280px;
-            object-fit: contain;
-            filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.2));
-        }
-
-        .countdown-container {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: var(--border-radius-lg);
-            padding: 1.5rem;
-            margin: 2rem 0;
-            backdrop-filter: blur(10px);
-        }
-
-        .countdown-timer {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .timer-box {
-            background: var(--gray-900);
-            color: white;
-            border-radius: var(--border-radius);
-            padding: 1rem;
-            text-align: center;
-            min-width: 4rem;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .timer-number {
-            font-size: 1.8rem;
-            font-weight: 800;
-            line-height: 1;
-            font-family: var(--font-display);
-        }
-
-        .timer-label {
-            font-size: 0.75rem;
-            opacity: 0.8;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-top: 0.25rem;
-        }
-
-        /* Product Sections */
+        
+        /* Product Cards - Premium & Responsive */
         .product-section {
-            padding: 4rem 0;
+            padding: var(--section-padding);
         }
-
+        
         .section-header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 3.5rem;
         }
-
+        
         .section-title {
-            font-size: 2.5rem;
+            font-size: 2.75rem;
             font-weight: 700;
             margin-bottom: 1rem;
         }
-
+        
         .section-subtitle {
             font-size: 1.125rem;
             color: var(--gray-600);
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
         }
-
-        /* Category Display Items */
-        .category-showcase {
-            background: var(--gray-50);
-            border-radius: var(--border-radius-xl);
-            padding: 3rem;
-            margin: 3rem 0;
-        }
-
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .category-item {
-            background: white;
-            border-radius: var(--border-radius-lg);
-            padding: 2rem 1rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .category-item:hover {
-            transform: translateY(-4px);
-            border-color: var(--primary-color);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .category-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-
-        .category-name {
-            font-weight: 600;
-            color: var(--gray-800);
-            margin-bottom: 0.5rem;
-        }
-
-        .category-count {
-            font-size: 0.875rem;
-            color: var(--gray-500);
-        }
-
-        /* Product Cards */
-        .product-carousel {
-            padding: 1rem 0 2rem;
-            position: relative;
-        }
-
+        
         .product-card {
             background: white;
             border: 1px solid var(--gray-200);
             border-radius: var(--border-radius-lg);
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            flex-shrink: 0;
-            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-sm);
+            max-height: 420px;
         }
-
+        
         .product-card:hover {
             transform: translateY(-8px);
             box-shadow: var(--shadow-2xl);
             border-color: var(--primary-color);
         }
-
+        
         .product-image-container {
             position: relative;
             background: var(--gray-50);
-            height: 250px;
+            height: 180px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
         }
-
+        
         .product-image {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            padding: 1.5rem;
+            padding: 1rem;
             transition: transform 0.3s ease;
         }
-
+        
         .product-card:hover .product-image {
             transform: scale(1.05);
         }
-
+        
         .product-badge {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
+            top: 0.75rem;
+            right: 0.75rem;
             background: var(--danger-color);
             color: white;
-            padding: 0.25rem 0.75rem;
+            padding: 0.25rem 0.625rem;
             border-radius: 50px;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: 600;
             box-shadow: var(--shadow-md);
+            z-index: 2;
         }
-
-        .product-actions {
-            position: absolute;
-            bottom: 1rem;
-            left: 1rem;
-            right: 1rem;
-            display: flex;
-            gap: 0.5rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-        }
-
-        .product-card:hover .product-actions {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        
         .product-info {
-            padding: 1.5rem;
+            padding: 1.25rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
-
+        
         .product-title {
             font-weight: 600;
             color: var(--gray-800);
@@ -627,270 +528,1002 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            line-height: 1.4;
+            line-height: 1.3;
             margin-bottom: 0.75rem;
-            min-height: 2.8rem;
+            min-height: 2.4rem;
+            font-size: 1rem;
         }
-
+        
         .product-title:hover {
             color: var(--primary-color);
         }
-
+        
         .product-rating {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.375rem;
             margin-bottom: 0.75rem;
         }
-
+        
         .stars {
             display: flex;
-            gap: 0.125rem;
+            gap: 0.1rem;
         }
-
+        
         .star {
             color: #fbbf24;
-            font-size: 0.875rem;
+            font-size: 0.75rem;
         }
-
+        
         .rating-text {
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             color: var(--gray-500);
         }
-
+        
         .product-price {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            margin-top: auto;
         }
-
+        
         .price-current {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             font-weight: 700;
             color: var(--gray-900);
         }
-
+        
         .price-original {
-            font-size: 1rem;
+            font-size: 0.875rem;
             color: var(--gray-500);
             text-decoration: line-through;
         }
-
-        /* Mystery Box */
-        .mystery-section {
-            padding: 5rem 0;
-            background: var(--gray-900);
-            color: white;
-            position: relative;
-            overflow: hidden;
+        
+        .product-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: auto;
         }
-
-        .mystery-section::before {
+        
+        .product-actions .btn {
+            padding: 0.625rem 1rem;
+            font-size: 0.8rem;
+            flex: 1;
+        }
+        
+        /* Deal Section - Premium & Professional */
+        .deal-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            position: relative;
+        }
+        
+        .deal-section::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30v-2h-2v2h-2v2h2v2h2v-2h2v-2h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%236366f1' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='m0 60 60-60h-60v60zm60 0v-60h-60l60 60z'/%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
         }
-
-        .mystery-content {
+        
+        .deal-card {
+            background: white;
+            border-radius: var(--border-radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .deal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 100%;
+            background: var(--primary-gradient);
+            z-index: 2;
+        }
+        
+        .deal-header {
+            background: var(--gray-50);
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
             position: relative;
             z-index: 2;
-            padding: 4rem;
         }
-
-        .mystery-image-container {
-            background: var(--primary-gradient);
+        
+        .deal-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            background: var(--warning-color);
+            color: white;
+        }
+        
+        .deal-body {
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .deal-image-container {
+            position: relative;
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+        }
+        
+        .deal-image {
+            max-width: 100%;
+            max-height: 280px;
+            object-fit: contain;
+            filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.15));
+            transition: transform 0.3s ease;
+        }
+        
+        .deal-image-container:hover .deal-image {
+            transform: scale(1.05);
+        }
+        
+        .deal-price-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .deal-price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            font-family: var(--font-display);
+        }
+        
+        .deal-original-price {
+            font-size: 1.25rem;
+            color: var(--gray-500);
+            text-decoration: line-through;
+        }
+        
+        .deal-discount {
+            background: var(--success-color);
+            color: white;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+        }
+        
+        .deal-features {
+            margin: 1.5rem 0;
+        }
+        
+        .deal-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            color: var(--gray-700);
+        }
+        
+        .deal-feature i {
+            color: var(--primary-color);
+            font-size: 1rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .countdown-container {
+            background: var(--gray-900);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .countdown-label {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .timer-box {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: var(--border-radius);
+            padding: 1.25rem;
+            text-align: center;
+            min-width: 4.5rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .timer-number {
+            font-size: 1.75rem;
+            font-weight: 800;
+            line-height: 1;
+            font-family: var(--font-display);
+        }
+        
+        .timer-label {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.5rem;
+        }
+        
+        .deal-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        /* Mystery Box Section - Premium Styling */
+        .mystery-box-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            position: relative;
+            padding: 5rem 0;
+        }
+        
+        .mystery-box-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%236366f1' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='m0 60 60-60h-60v60zm60 0v-60h-60l60 60z'/%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+        
+        .mystery-box-container {
+            background: white;
             border-radius: var(--border-radius-xl);
-            padding: 3rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .mystery-box-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 100%;
+            background: var(--primary-gradient);
+            z-index: 2;
+        }
+        
+        .mystery-box-header {
+            background: var(--gray-50);
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .mystery-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .mystery-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        
+        .mystery-badge.premium {
+            background: var(--primary-gradient);
+            color: white;
+        }
+        
+        .mystery-badge.limited {
+            background: var(--danger-color);
+            color: white;
+        }
+        
+        .mystery-box-body {
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .mystery-box-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+        
+        .mystery-box-description {
+            font-size: 1.125rem;
+            color: var(--gray-700);
+            margin-bottom: 2rem;
+        }
+        
+        .mystery-features {
+            background: var(--gray-50);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .mystery-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            color: var(--gray-700);
+        }
+        
+        .mystery-feature i {
+            color: var(--primary-color);
+            font-size: 1rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .mystery-box-price-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .mystery-box-price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            font-family: var(--font-display);
+        }
+        
+        .mystery-box-original-price {
+            font-size: 1.25rem;
+            color: var(--gray-500);
+            text-decoration: line-through;
+        }
+        
+        .mystery-box-discount {
+            background: var(--danger-color);
+            color: white;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+        }
+        
+        .mystery-box-visual {
+            position: relative;
+            padding: 2rem;
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 400px;
-            position: relative;
-            overflow: hidden;
         }
-
-        .mystery-image-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
-        }
-
-        .mystery-image {
-            max-width: 350px;
-            max-height: 350px;
-            object-fit: contain;
-            filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.3));
+        
+        .mystery-box-image {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            max-width: 400px;
             position: relative;
             z-index: 2;
+            border: 2px solid var(--gray-200);
         }
-
-        .mystery-features {
-            list-style: none;
-            padding: 0;
-            margin: 2rem 0;
-        }
-
-        .mystery-features li {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .mystery-features i {
-            color: var(--accent-color);
-            font-size: 1.25rem;
-            width: 1.5rem;
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--gray-900);
-            color: white;
-            padding: 4rem 0 2rem;
-        }
-
-        .footer h5 {
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: white;
-        }
-
-        .footer-links {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: white;
-        }
-
-        .newsletter-form {
-            background: rgba(255, 255, 255, 0.1);
+        
+        .mystery-box-image img {
+            width: 100%;
+            height: auto;
             border-radius: var(--border-radius);
-            padding: 0.5rem;
-            backdrop-filter: blur(10px);
         }
-
-        .newsletter-form .form-control {
-            background: transparent;
-            border: none;
-            color: white;
-            padding: 0.75rem 1rem;
-        }
-
-        .newsletter-form .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .newsletter-form .form-control:focus {
-            background: transparent;
-            box-shadow: none;
-            color: white;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-link {
-            width: 3rem;
-            height: 3rem;
-            background: rgba(255, 255, 255, 0.1);
+        
+        .mystery-float-item {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
+            box-shadow: var(--shadow-md);
+            z-index: 3;
+        }
+        
+        .mystery-float-item i {
+            font-size: 1.5rem;
+        }
+        
+        .mystery-float-item.top-left {
+            top: 10%;
+            left: 10%;
+        }
+        
+        .mystery-float-item.top-right {
+            top: 15%;
+            right: 10%;
+        }
+        
+        .mystery-float-item.bottom-left {
+            bottom: 15%;
+            left: 15%;
+        }
+        
+        .mystery-float-item.bottom-right {
+            bottom: 10%;
+            right: 15%;
+        }
+        
+        .mystery-brands {
+            padding: 2rem;
+            background: var(--gray-50);
+            border-radius: var(--border-radius-lg);
+            margin-top: 2rem;
+        }
+        
+        .mystery-brands h4 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--gray-800);
+        }
+        
+        .brand-items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .brand-item {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
             transition: all 0.3s ease;
         }
-
-        .social-link:hover {
+        
+        .brand-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .brand-item i {
+            font-size: 1.75rem;
+        }
+        
+        .mystery-box-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn-mystery-primary {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 700;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-mystery-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+            color: white;
+        }
+        
+        .btn-mystery-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-mystery-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-mystery-secondary {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            font-weight: 700;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-mystery-secondary:hover {
             background: var(--primary-color);
             color: white;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
         }
-
-        /* Responsive Design */
-        @media (max-width: 1199.98px) {
-            .hero-content { padding: 3rem 2rem; }
-            .section-title { font-size: 2.25rem; }
+        
+        /* Testimonial Section */
+        .testimonial-section {
+            padding: var(--section-padding);
+            background: var(--gray-50);
         }
-
-        @media (max-width: 991.98px) {
-            .category-nav { display: none; }
-            .hero-section { padding: 3rem 0; }
-            .hero-content { padding: 2rem; text-align: center; }
-            .hero-image { order: -1; margin-bottom: 2rem; }
-            .deal-card { padding: 2rem; }
-            .mystery-content { padding: 2rem; text-align: center; }
-            .mystery-image-container { min-height: 250px; padding: 2rem; }
-            .countdown-timer { gap: 0.75rem; }
-            .timer-box { min-width: 3.5rem; }
-            .category-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; }
-            
-            /* Mobile product actions - always visible */
-            .product-actions {
-                position: relative;
-                opacity: 1;
-                transform: translateY(0);
-                bottom: auto;
-                left: auto;
-                right: auto;
-                margin-top: 1rem;
+        
+        .testimonial-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-md);
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .testimonial-content {
+            font-style: italic;
+            margin-bottom: 1.75rem;
+            color: var(--gray-700);
+            font-size: 1.125rem;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .author-info h5 {
+            margin-bottom: 0;
+            font-size: 1.125rem;
+        }
+        
+        .author-info p {
+            margin-bottom: 0;
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+        
+        /* Newsletter Section */
+        .newsletter-section {
+            padding: 4.5rem 0;
+            background: var(--gray-900);
+            color: white;
+        }
+        
+        .newsletter-content {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2.5rem;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 0.875rem 1.5rem;
+            border-radius: var(--border-radius-lg);
+            border: none;
+            font-size: 1rem;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--gray-900);
+            color: white;
+            padding: 4.5rem 0 2.5rem;
+        }
+        
+        .footer h5 {
+            font-weight: 700;
+            margin-bottom: 1.75rem;
+            color: white;
+            font-size: 1.125rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.875rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 3.5rem;
+            padding-top: 2.5rem;
+            text-align: center;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            background: var(--primary-gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-2xl);
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
             }
         }
-
-        @media (max-width: 767.98px) {
-            .section-title { font-size: 1.875rem; }
-            .hero-content { padding: 1.5rem; }
-            .deal-card { padding: 1.5rem; }
-            .mystery-content { padding: 1.5rem; }
-            .mystery-image-container { min-height: 200px; padding: 1.5rem; }
-            .mystery-image { max-width: 250px; max-height: 250px; }
-            .feature-card { padding: 2rem 1.5rem; }
-            .countdown-timer { gap: 0.5rem; }
-            .timer-box { min-width: 3rem; padding: 0.75rem 0.5rem; }
-            .timer-number { font-size: 1.5rem; }
-            .nav-actions { gap: 1rem; }
+        
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .animation-delay-1 {
+            animation-delay: 0.5s;
+        }
+        
+        .animation-delay-2 {
+            animation-delay: 1s;
+        }
+        
+        .animation-delay-3 {
+            animation-delay: 1.5s;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1199.98px) {
+            :root {
+                --section-padding: 4.5rem 0;
+                --container-padding: 1.5rem;
+            }
+            .hero-content { padding: 2rem; }
+        }
+        
+        @media (max-width: 991.98px) {
+            :root {
+                --section-padding: 4rem 0;
+            }
+            .category-nav { display: none; }
+            .hero-section { padding: 3rem 0; }
+            .hero-content { padding: 1.5rem; text-align: center; }
+            .hero-image { order: -1; margin-bottom: 1.5rem; }
+            
+            .navbar-brand { font-size: 1.25rem; }
             .nav-link span { display: none; }
+            
+            /* Product grid on tablet */
+            .swiper-slide { width: calc(50% - 0.75rem) !important; }
+            
+            /* Deal Section Responsive */
+            .deal-body { padding: 1.5rem; }
+            .deal-image-container { min-height: 250px; }
+            .deal-price { font-size: 1.75rem; }
+            .deal-original-price { font-size: 1.125rem; }
+            .countdown-timer { gap: 0.75rem; }
+            .timer-box { min-width: 4rem; padding: 1rem; }
+            
+            /* Mystery Box Responsive */
+            .mystery-box-body { padding: 1.5rem; }
+            .mystery-box-title { font-size: 1.75rem; }
+            .mystery-box-price { font-size: 1.75rem; }
+            .mystery-box-original-price { font-size: 1.125rem; }
+            .mystery-box-visual { min-height: 300px; }
+            .mystery-float-item { width: 50px; height: 50px; }
+            .mystery-float-item i { font-size: 1.25rem; }
         }
-
+        
+        @media (max-width: 767.98px) {
+            :root {
+                --section-padding: 3.5rem 0;
+                --container-padding: 1rem;
+            }
+            
+            .section-title { 
+                font-size: 2.25rem; 
+                margin-bottom: 0.75rem;
+            }
+            
+            .section-subtitle {
+                font-size: 1rem;
+            }
+            
+            .hero-content { 
+                padding: 1.5rem; 
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            .hero-content .lead {
+                font-size: 1.125rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .hero-badge {
+                font-size: 0.75rem;
+                padding: 0.5rem 1rem;
+            }
+            
+            .nav-actions { gap: 0.5rem; }
+            .nav-link { padding: 0.5rem; }
+            
+            /* Product card adjustments for mobile */
+            .product-card {
+                max-height: 380px;
+            }
+            
+            .product-image-container {
+                height: 160px;
+            }
+            
+            .product-info {
+                padding: 1rem;
+            }
+            
+            .product-title {
+                font-size: 0.9rem;
+                min-height: 2.2rem;
+            }
+            
+            .product-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .product-actions .btn {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.75rem;
+            }
+            
+            .promo-banner { padding: 2.5rem 1.5rem; }
+            .service-banner { padding: 2rem; }
+            .service-icon { 
+                width: 3.5rem;
+                height: 3.5rem;
+                font-size: 1.5rem;
+            }
+            
+            .btn { 
+                padding: 0.75rem 1.25rem;
+                font-size: 0.875rem;
+            }
+            
+            .btn-lg {
+                padding: 0.875rem 1.75rem;
+                font-size: 1rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .testimonial-content {
+                font-size: 1rem;
+            }
+            
+            /* Deal Section Responsive */
+            .deal-body { padding: 1rem; }
+            .deal-image-container { min-height: 200px; padding: 1rem; }
+            .deal-price { font-size: 1.5rem; }
+            .deal-original-price { font-size: 1rem; }
+            .countdown-timer { gap: 0.5rem; }
+            .timer-box { min-width: 3.5rem; padding: 0.75rem; }
+            .timer-number { font-size: 1.5rem; }
+            
+            /* Mystery Box Responsive */
+            .mystery-box-body { padding: 1rem; }
+            .mystery-box-title { font-size: 1.5rem; }
+            .mystery-box-price { font-size: 1.5rem; }
+            .mystery-box-original-price { font-size: 1rem; }
+            .mystery-box-visual { min-height: 250px; padding: 1rem; }
+            .mystery-float-item { width: 40px; height: 40px; }
+            .mystery-float-item i { font-size: 1rem; }
+            .brand-item { width: 50px; height: 50px; }
+            .brand-item i { font-size: 1.25rem; }
+            .mystery-box-actions { flex-direction: column; }
+        }
+        
         @media (max-width: 575.98px) {
+            :root {
+                --container-padding: 0.75rem;
+            }
+            
             .hero-content { padding: 1rem; }
-            .section-title { font-size: 1.75rem; }
-            .deal-card { padding: 1rem; }
-            .mystery-content { padding: 1rem; }
-            .mystery-image-container { min-height: 180px; padding: 1rem; }
-            .mystery-image { max-width: 200px; max-height: 200px; }
-            .countdown-timer { justify-content: center; }
-            .category-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero-content h1 { font-size: 2rem; }
+            .hero-content .lead { font-size: 1rem; }
+            
+            .section-title { font-size: 1.875rem; }
+            .section-subtitle { font-size: 0.95rem; }
+            
+            /* Product card adjustments for small mobile */
+            .product-card {
+                max-height: 360px;
+            }
+            
+            .product-image-container {
+                height: 150px;
+            }
+            
+            .product-info {
+                padding: 1rem;
+            }
+            
+            .product-title {
+                font-size: 0.85rem;
+                min-height: 2rem;
+            }
+            
+            .product-rating {
+                margin-bottom: 0.5rem;
+            }
+            
+            .product-price {
+                margin-bottom: 0.75rem;
+            }
+            
+            .price-current {
+                font-size: 1rem;
+            }
+            
+            .price-original {
+                font-size: 0.8rem;
+            }
+            
+            .swiper-slide { width: calc(50% - 0.5rem) !important; }
+            
+            .promo-banner { padding: 2rem 1rem; }
+            .promo-banner h3 { font-size: 1.25rem; }
+            .promo-banner p { font-size: 0.95rem; }
+            
+            .countdown-timer { gap: 0.5rem; }
+            .timer-box { 
+                min-width: 3rem; 
+                padding: 0.75rem 0.5rem;
+            }
+            .timer-number { font-size: 1.25rem; }
+            
+            .testimonial-card {
+                padding: 1.5rem;
+            }
+            
+            /* Deal Section Responsive */
+            .deal-image-container { min-height: 180px; padding: 0.75rem; }
+            .deal-price { font-size: 1.25rem; }
+            .deal-original-price { font-size: 0.875rem; }
+            .timer-box { min-width: 2.75rem; padding: 0.5rem; }
+            .timer-number { font-size: 1.125rem; }
+            
+            /* Mystery Box Responsive */
+            .mystery-box-title { font-size: 1.25rem; }
+            .mystery-box-price { font-size: 1.25rem; }
+            .mystery-box-original-price { font-size: 0.875rem; }
+            .mystery-box-visual { min-height: 200px; padding: 0.75rem; }
+            .mystery-float-item { width: 35px; height: 35px; }
+            .mystery-float-item i { font-size: 0.875rem; }
+            .brand-item { width: 40px; height: 40px; }
+            .brand-item i { font-size: 1rem; }
         }
-
+        
+        /* Swiper responsive */
+        .swiper {
+            padding-bottom: 2.5rem;
+        }
+        
+        @media (min-width: 1200px) {
+            .swiper-slide { width: calc(20% - 1rem) !important; }
+        }
+        
+        @media (min-width: 992px) and (max-width: 1199.98px) {
+            .swiper-slide { width: calc(25% - 1rem) !important; }
+        }
+        
+        @media (min-width: 768px) and (max-width: 991.98px) {
+            .swiper-slide { width: calc(33.333% - 0.75rem) !important; }
+        }
     </style>
 </head>
-
 <body>
     <header class="main-header">
         <div class="d-none d-lg-block">
@@ -905,7 +1538,7 @@
                     <div class="col-6">
                         <div class="search-container">
                             <i class="fas fa-search search-icon"></i>
-                            <input type="text" class="search-input" placeholder="Search for premium gadgets, brands and more...">
+                            <input type="text" class="search-input" placeholder="Search for premium gadgets...">
                             <button class="search-btn">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -914,7 +1547,7 @@
                     <div class="col-4">
                         <div class="nav-actions justify-content-end">
                             <div class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                     <i class="fas fa-user"></i>
                                     <span>Account</span>
                                 </a>
@@ -923,7 +1556,6 @@
                                     <li><a class="dropdown-item" href="#"><i class="fas fa-user-plus me-2"></i>Sign Up</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="#"><i class="fas fa-box me-2"></i>My Orders</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="fas fa-user-cog me-2"></i>Profile Settings</a></li>
                                 </ul>
                             </div>
                             <a href="#" class="nav-link">
@@ -941,74 +1573,67 @@
                 </div>
             </div>
         </div>
-
         <div class="d-lg-none">
             <div class="container">
-                <nav class="navbar navbar-expand-lg py-3">
+                <nav class="navbar navbar-expand-lg py-2">
                     <a href="#" class="navbar-brand">
                         <i class="fas fa-microchip me-1"></i>
                         gadgetNukkad
                     </a>
                     <div class="d-flex align-items-center gap-2">
-                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#searchModal">
+                        <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#searchModal">
                             <i class="fas fa-search"></i>
                         </button>
-                        <button class="btn btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
+                        <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
                             <i class="fas fa-bars"></i>
                         </button>
                     </div>
                 </nav>
             </div>
         </div>
-
         <nav class="category-nav d-none d-lg-block">
             <div class="container">
                 <ul class="nav">
                     <li class="nav-item">
                         <a class="nav-link" href="#deals">
-                            <i class="fas fa-fire me-2"></i>Hot Deals
+                            <i class="fas fa-fire me-1"></i>Hot Deals
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#mobiles">
-                            <i class="fas fa-mobile-alt me-2"></i>Mobiles
+                        <a class="nav-link" href="shopmobile.html">
+                            <i class="fas fa-mobile-alt me-1"></i>Mobiles
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#audio">
-                            <i class="fas fa-headphones me-2"></i>Audio
+                            <i class="fas fa-headphones me-1"></i>Audio
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#kitchen">
-                            <i class="fas fa-utensils me-2"></i>Kitchen
+                            <i class="fas fa-utensils me-1"></i>Kitchen
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#smart-home">
-                            <i class="fas fa-home me-2"></i>Smart Home
+                            <i class="fas fa-home me-1"></i>Smart Home
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#gaming">
-                            <i class="fas fa-gamepad me-2"></i>Gaming
+                            <i class="fas fa-gamepad me-1"></i>Gaming
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#kids">
-                            <i class="fas fa-child me-2"></i>Kids
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#accessories">
-                            <i class="fas fa-plug me-2"></i>Accessories
+                        <a class="nav-link" href="mysterybox.html">
+                            <i class="fas fa-gift me-1"></i>Mystery Box
                         </a>
                     </li>
                 </ul>
             </div>
         </nav>
     </header>
-
+    
     <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title">
@@ -1031,19 +1656,18 @@
             <div>
                 <h6 class="text-uppercase fw-bold text-muted small mb-3">Categories</h6>
                 <nav class="nav flex-column">
-                    <a class="nav-link" href="#"><i class="fas fa-fire me-2"></i>Hot Deals</a>
-                    <a class="nav-link" href="#"><i class="fas fa-mobile-alt me-2"></i>Mobiles</a>
-                    <a class="nav-link" href="#"><i class="fas fa-headphones me-2"></i>Audio</a>
-                    <a class="nav-link" href="#"><i class="fas fa-utensils me-2"></i>Kitchen</a>
-                    <a class="nav-link" href="#"><i class="fas fa-home me-2"></i>Smart Home</a>
-                    <a class="nav-link" href="#"><i class="fas fa-gamepad me-2"></i>Gaming</a>
-                    <a class="nav-link" href="#"><i class="fas fa-child me-2"></i>Kids</a>
-                    <a class="nav-link" href="#"><i class="fas fa-plug me-2"></i>Accessories</a>
+                    <a class="nav-link" href="#deals"><i class="fas fa-fire me-2"></i>Hot Deals</a>
+                    <a class="nav-link" href="shopmobile.html"><i class="fas fa-mobile-alt me-2"></i>Mobiles</a>
+                    <a class="nav-link" href="#audio"><i class="fas fa-headphones me-2"></i>Audio</a>
+                    <a class="nav-link" href="#kitchen"><i class="fas fa-utensils me-2"></i>Kitchen</a>
+                    <a class="nav-link" href="#smart-home"><i class="fas fa-home me-2"></i>Smart Home</a>
+                    <a class="nav-link" href="#gaming"><i class="fas fa-gamepad me-2"></i>Gaming</a>
+                    <a class="nav-link" href="mysterybox.html"><i class="fas fa-gift me-2"></i>Mystery Box</a>
                 </nav>
             </div>
         </div>
     </div>
-
+    
     <div class="modal fade" id="searchModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -1071,12 +1695,12 @@
                 <div class="modal-header">
                     <h5 class="modal-title">
                         <i class="fas fa-lock me-2"></i>
-                        Action Required
+                        Login Required
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Please log in or create an account to add items to your cart or wishlist.</p>
+                    <p>Please log in or create an account to continue.</p>
                 </div>
                 <div class="modal-footer">
                     <a href="#" class="btn btn-primary">
@@ -1089,7 +1713,7 @@
             </div>
         </div>
     </div>
-
+    
     <main>
         <section class="hero-section">
             <div class="container">
@@ -1100,46 +1724,30 @@
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <div class="hero-slide hero-slide-1">
+                            <div class="hero-slide">
                                 <div class="row g-0 align-items-center">
                                     <div class="col-lg-6">
                                         <div class="hero-content">
-                                            <div class="badge bg-primary fs-6 mb-3">
+                                            <div class="hero-badge bg-primary">
                                                 <i class="fas fa-crown me-1"></i>
                                                 Premium Collection
                                             </div>
-                                            <h1 class="display-2 fw-bolder mb-4">
+                                            <h1 class="display-4 fw-bolder mb-3">
                                                 Experience the Future of 
                                                 <span class="text-premium">Audio</span>
                                             </h1>
                                             <p class="lead mb-4">
-                                                Immerse yourself in crystal-clear sound with our premium collection of 
-                                                wireless headphones, earbuds, and speakers. Professional audio quality 
-                                                meets elegant design.
+                                                Crystal-clear sound with premium wireless headphones and speakers.
                                             </p>
-                                            <div class="d-flex flex-wrap gap-3">
+                                            <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
                                                 <a href="#audio" class="btn btn-primary btn-lg">
                                                     <i class="fas fa-headphones me-2"></i>
-                                                    Explore Audio Collection
+                                                    Shop Audio
                                                 </a>
                                                 <a href="#deals" class="btn btn-outline-primary btn-lg">
                                                     <i class="fas fa-tags me-2"></i>
-                                                    View Special Offers
+                                                    View Offers
                                                 </a>
-                                            </div>
-                                             <div class="row mt-4 text-center">
-                                                <div class="col-4">
-                                                    <div class="fw-bold h5 text-premium">500+</div>
-                                                    <div class="small text-muted">Products</div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="fw-bold h5 text-premium">50,000+</div>
-                                                    <div class="small text-muted">Happy Customers</div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="fw-bold h5 text-premium">5 Years</div>
-                                                    <div class="small text-muted">In Hisar</div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1158,49 +1766,26 @@
                                 <div class="row g-0 align-items-center">
                                     <div class="col-lg-6">
                                         <div class="hero-content">
-                                             <div class="badge bg-success fs-6 mb-3">
+                                             <div class="hero-badge bg-success">
                                                 <i class="fas fa-bolt me-1"></i>
                                                 Smart Technology
                                             </div>
-                                            <h1 class="display-2 fw-bolder mb-4">
+                                            <h1 class="display-4 fw-bolder mb-3">
                                                 Stay Connected with 
                                                 <span class="text-premium">Smart Watches</span>
                                             </h1>
                                             <p class="lead mb-4">
-                                                Transform your lifestyle with intelligent wearables. Advanced health 
-                                                monitoring, fitness tracking, and seamless connectivity - all on your wrist.
+                                                Advanced health monitoring and seamless connectivity on your wrist.
                                             </p>
-                                            <div class="d-flex flex-wrap gap-3">
+                                            <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
                                                 <a href="#smartwatches" class="btn btn-primary btn-lg">
                                                     <i class="fas fa-clock me-2"></i>
-                                                    Shop Smart Watches
+                                                    Shop Watches
                                                 </a>
                                                 <a href="#compare" class="btn btn-outline-primary btn-lg">
                                                     <i class="fas fa-balance-scale me-2"></i>
-                                                    Compare Models
+                                                    Compare
                                                 </a>
-                                            </div>
-                                            <div class="row mt-4">
-                                                <div class="col-md-6">
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <i class="fas fa-heart text-danger me-2"></i>
-                                                        <span class="small">Advanced Health Monitoring</span>
-                                                    </div>
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <i class="fas fa-running text-success me-2"></i>
-                                                        <span class="small">Comprehensive Fitness Tracking</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <i class="fas fa-battery-three-quarters text-warning me-2"></i>
-                                                        <span class="small">7-Day Battery Life</span>
-                                                    </div>
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <i class="fas fa-mobile-alt text-primary me-2"></i>
-                                                        <span class="small">Seamless Phone Integration</span>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1217,108 +1802,128 @@
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon"></span>
-                        <span class="visually-hidden">Previous</span>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
                         <span class="carousel-control-next-icon"></span>
-                        <span class="visually-hidden">Next</span>
                     </button>
                 </div>
             </div>
         </section>
-
-        <section class="features-section">
+        
+        <section class="banner-section">
+            <div class="container">
+                <div class="promo-banner">
+                    <div class="promo-content">
+                        <h3 class="fw-bold mb-2">
+                            <i class="fas fa-shipping-fast me-2"></i>
+                            Free Express Delivery in Hisar
+                        </h3>
+                        <p class="mb-3">Order above ₹2,999 and get same-day delivery. Premium installation included!</p>
+                        <a href="#deals" class="btn btn-warning text-dark fw-bold">
+                            <i class="fas fa-rocket me-2"></i>
+                            Shop Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="banner-section">
             <div class="container">
                 <div class="row g-4">
                     <div class="col-lg-4 col-md-6">
-                        <div class="feature-card">
-                            <div class="feature-icon">
+                        <div class="service-banner">
+                            <div class="service-icon">
                                 <i class="fas fa-award"></i>
                             </div>
-                            <h4 class="fw-bold mb-3">Premium Quality Guarantee</h4>
-                            <!-- <p class="text-muted mb-0">
-                                Every product undergoes rigorous quality testing and comes with comprehensive 
-                                warranty coverage. We partner only with authorized brands and certified suppliers.
-                            </p> -->
+                            <h5 class="fw-bold mb-1">Premium Quality</h5>
+                            <p class="text-muted mb-0">100% Authentic Products</p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        <div class="feature-card">
-                            <div class="feature-icon">
+                        <div class="service-banner">
+                            <div class="service-icon">
                                 <i class="fas fa-shield-alt"></i>
                             </div>
-                            <h4 class="fw-bold mb-3">Trusted in Hisar Since 2019</h4>
-                            <!-- <p class="text-muted mb-0">
-                                Your local technology partner with over 50,000 satisfied customers. 
-                                Recognized for excellence in service and genuine product authenticity.
-                            </p> -->
+                            <h5 class="fw-bold mb-1">Trusted Since 2019</h5>
+                            <p class="text-muted mb-0">50,000+ Happy Customers</p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        <div class="feature-card">
-                            <div class="feature-icon">
-                                <i class="fas fa-shipping-fast"></i>
+                        <div class="service-banner">
+                            <div class="service-icon">
+                                <i class="fas fa-tools"></i>
                             </div>
-                            <h4 class="fw-bold mb-3">Express Delivery Service</h4>
-                            <!-- <p class="text-muted mb-0">
-                                Same-day delivery in Hisar, next-day delivery across Haryana. 
-                                Free installation and setup service for premium purchases above ₹25,000.
-                            </p> -->
+                            <h5 class="fw-bold mb-1">Expert Support</h5>
+                            <p class="text-muted mb-0">Free Setup & Installation</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
+        
+        <!-- Professional Deal of the Week Section -->
         <section class="deal-section" id="deals">
             <div class="container">
                 <div class="deal-card">
-                    <div class="row align-items-center g-4">
-                        <div class="col-lg-6">
-                            <div class="deal-image-container">
-                                <img src="https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&q=80" 
-                                     alt="Premium Smartwatch Limited Offer" 
-                                     class="deal-image">
-                                <div class="position-absolute top-0 end-0 m-3">
-                                    <span class="badge bg-danger fs-5 px-3 py-2">
-                                        <i class="fas fa-bolt me-1"></i>
-                                        Limited Time
-                                    </span>
+                    <div class="deal-header">
+                        <div class="deal-badge">
+                            <i class="fas fa-fire"></i>
+                            Deal of the Week
+                        </div>
+                    </div>
+                    <div class="deal-body">
+                        <div class="row align-items-center">
+                            <div class="col-lg-5">
+                                <div class="deal-image-container">
+                                    <img src="https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&q=80" 
+                                         alt="Premium Smartwatch Deal" 
+                                         class="deal-image">
+                                    <div class="position-absolute top-0 end-0 m-2">
+                                        <span class="badge bg-danger fs-6 px-2 py-1">
+                                            <i class="fas fa-bolt me-1"></i>
+                                            Limited
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="position-relative">
-                                <div class="badge bg-warning text-dark fs-6 mb-3">
-                                    <i class="fas fa-fire me-1"></i>
-                                    Deal of the Week
-                                </div>
-                                <h2 class="display-4 fw-bold mb-3 font-display">
+                            <div class="col-lg-7">
+                                <h2 class="h3 fw-bold mb-3">
                                     Premium Smartwatch Collection
                                 </h2>
-                                <p class="lead mb-4">
-                                    Experience the perfect fusion of style and technology. Features include advanced 
-                                    health monitoring, GPS tracking, 7-day battery life, and premium build quality. 
-                                    Compatible with both iOS and Android.
+                                <p class="mb-3">
+                                    Advanced health monitoring, GPS tracking, 7-day battery life. 
+                                    Compatible with iOS and Android.
                                 </p>
                                 
-                                <div class="d-flex align-items-center mb-4">
-                                    <div class="me-4">
-                                        <span class="h1 fw-bold text-dark mb-0">₹12,499</span>
-                                        <span class="h4 text-muted text-decoration-line-through ms-2">₹19,999</span>
+                                <div class="deal-features">
+                                    <div class="deal-feature">
+                                        <i class="fas fa-heartbeat"></i>
+                                        <span>Advanced Health Monitoring</span>
                                     </div>
-                                    <div class="badge bg-success fs-5 px-3 py-2">
-                                        <i class="fas fa-percentage me-1"></i>
-                                        37% OFF
+                                    <div class="deal-feature">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>Built-in GPS Tracking</span>
+                                    </div>
+                                    <div class="deal-feature">
+                                        <i class="fas fa-battery-full"></i>
+                                        <span>7-Day Battery Life</span>
+                                    </div>
+                                    <div class="deal-feature">
+                                        <i class="fas fa-mobile-alt"></i>
+                                        <span>iOS & Android Compatible</span>
                                     </div>
                                 </div>
-
+                                
+                                <div class="deal-price-container">
+                                    <span class="deal-price">₹12,499</span>
+                                    <span class="deal-original-price">₹19,999</span>
+                                    <span class="deal-discount">37% OFF</span>
+                                </div>
+                                
                                 <div class="countdown-container">
-                                    <h5 class="fw-bold mb-3 text-center">
-                                        <i class="fas fa-clock me-2"></i>
-                                        Offer Expires In:
-                                    </h5>
-                                    <div class="countdown-timer" id="countdown-timer">
+                                    <div class="countdown-label">Offer Ends In:</div>
+                                    <div class="countdown-timer">
                                         <div class="timer-box">
                                             <div id="days" class="timer-number">03</div>
                                             <div class="timer-label">Days</div>
@@ -1329,39 +1934,24 @@
                                         </div>
                                         <div class="timer-box">
                                             <div id="minutes" class="timer-number">27</div>
-                                            <div class="timer-label">Minutes</div>
+                                            <div class="timer-label">Min</div>
                                         </div>
                                         <div class="timer-box">
                                             <div id="seconds" class="timer-number">45</div>
-                                            <div class="timer-label">Seconds</div>
+                                            <div class="timer-label">Sec</div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="d-flex flex-wrap gap-3 mt-4">
-                                    <a href="#" class="btn btn-success btn-lg">
-                                        <i class="fas fa-shopping-cart me-2"></i>
-                                        Shop Now - Save ₹7,500
+                                
+                                <div class="deal-actions">
+                                    <a href="#" class="btn btn-success flex-fill">
+                                        <i class="fas fa-shopping-cart me-1"></i>
+                                        Buy Now
                                     </a>
-                                    <a href="#" class="btn btn-outline-primary btn-lg">
-                                        <i class="fas fa-info-circle me-2"></i>
-                                        View Details
+                                    <a href="#" class="btn btn-outline-primary flex-fill">
+                                        <i class="fas fa-info-circle me-1"></i>
+                                        Details
                                     </a>
-                                </div>
-
-                                <div class="row mt-4 text-center">
-                                    <div class="col-4">
-                                        <i class="fas fa-shipping-fast text-success mb-1"></i>
-                                        <div class="small">Free Delivery</div>
-                                    </div>
-                                    <div class="col-4">
-                                        <i class="fas fa-undo text-primary mb-1"></i>
-                                        <div class="small">Easy Returns</div>
-                                    </div>
-                                    <div class="col-4">
-                                        <i class="fas fa-shield-alt text-warning mb-1"></i>
-                                        <div class="small">2 Year Warranty</div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1369,168 +1959,182 @@
                 </div>
             </div>
         </section>
-
-        <section class="product-section bg-light" id="mobiles">
+        
+        <section class="product-section" id="mobiles">
             <div class="container">
                 <div class="section-header">
                     <h2 class="section-title">
-                        <i class="fas fa-mobile-alt me-3 text-primary"></i>
-                        Premium <span class="text-premium">Mobiles</span> & Accessories
+                        <i class="fas fa-mobile-alt me-2 text-primary"></i>
+                        Premium <span class="text-premium">Mobiles</span>
                     </h2>
                     <p class="section-subtitle">
-                        Flagship smartphones, tablets, and essential accessories from world's leading brands
+                        Latest smartphones and accessories from top brands
                     </p>
                 </div>
-                <div class="product-carousel">
-                    <div class="swiper" id="mobiles-swiper">
-                        <div class="swiper-wrapper" id="mobiles-products"></div>
-                    </div>
+                <div class="swiper" id="mobiles-swiper">
+                    <div class="swiper-wrapper" id="mobiles-products"></div>
                 </div>
                 <div class="text-center mt-4">
-                    <a href="#" class="btn btn-outline-primary btn-lg">
+                    <a href="#" class="btn btn-outline-primary">
                         <i class="fas fa-th-large me-2"></i>
-                        View All Mobile Products
-                        <i class="fas fa-arrow-right ms-2"></i>
+                        View All Mobiles
                     </a>
                 </div>
             </div>
         </section>
-
-        <section class="product-section" id="audio">
+        
+        <section class="product-section bg-light" id="audio">
             <div class="container">
                 <div class="section-header">
                     <h2 class="section-title">
-                        <i class="fas fa-headphones me-3 text-primary"></i>
-                        Immersive <span class="text-premium">Audio</span> Experience
+                        <i class="fas fa-headphones me-2 text-primary"></i>
+                        Premium <span class="text-premium">Audio</span>
                     </h2>
                     <p class="section-subtitle">
-                        Professional-grade headphones, earbuds, speakers, and audio accessories
+                        Professional headphones, speakers, and audio accessories
                     </p>
                 </div>
-                <div class="product-carousel">
-                    <div class="swiper" id="audio-swiper">
-                        <div class="swiper-wrapper" id="audio-products"></div>
-                    </div>
+                <div class="swiper" id="audio-swiper">
+                    <div class="swiper-wrapper" id="audio-products"></div>
                 </div>
                 <div class="text-center mt-4">
-                    <a href="#" class="btn btn-outline-primary btn-lg">
+                    <a href="#" class="btn btn-outline-primary">
                         <i class="fas fa-music me-2"></i>
                         Explore Audio Collection
-                        <i class="fas fa-arrow-right ms-2"></i>
                     </a>
                 </div>
             </div>
         </section>
-
-        <section class="product-section bg-light" id="kitchen">
+        
+        <section class="product-section" id="kitchen">
             <div class="container">
                 <div class="section-header">
                      <h2 class="section-title">
-                        <i class="fas fa-utensils me-3 text-primary"></i>
-                        Smart <span class="text-premium">Kitchen</span> Appliances
+                        <i class="fas fa-utensils me-2 text-primary"></i>
+                        Smart <span class="text-premium">Kitchen</span>
                     </h2>
                     <p class="section-subtitle">
-                        Revolutionary kitchen gadgets and appliances for the modern smart home
+                        Modern kitchen appliances for the smart home
                     </p>
                 </div>
-                <div class="product-carousel">
-                    <div class="swiper" id="kitchen-swiper">
-                        <div class="swiper-wrapper" id="kitchen-products"></div>
-                    </div>
+                <div class="swiper" id="kitchen-swiper">
+                    <div class="swiper-wrapper" id="kitchen-products"></div>
                 </div>
                 <div class="text-center mt-4">
-                    <a href="#" class="btn btn-outline-primary btn-lg">
+                    <a href="#" class="btn btn-outline-primary">
                         <i class="fas fa-utensils me-2"></i>
-                        Explore Kitchen Collection
-                         <i class="fas fa-arrow-right ms-2"></i>
+                        Shop Kitchen Appliances
                     </a>
                 </div>
             </div>
         </section>
-
-        <section class="mystery-section">
+        
+        <!-- Professional Mystery Box Section -->
+        <section class="mystery-box-section py-5">
             <div class="container">
-                <div class="mystery-content">
-                    <div class="row align-items-center g-4">
-                        <div class="col-lg-6">
-                            <div class="mystery-image-container">
-                                <img src="https://images.unsplash.com/photo-1595769816263-9b910be24d5f?w=500&q=80" 
-                                     alt="Mystery Tech Box" 
-                                     class="mystery-image">
-                                <div class="position-absolute top-0 start-0 m-3">
-                                    <span class="badge bg-warning text-dark fs-5 px-3 py-2">
-                                        <i class="fas fa-gift me-1"></i>
-                                        Limited Edition
-                                    </span>
+                <div class="mystery-box-container">
+                    <div class="mystery-box-header">
+                        <div class="mystery-badges">
+                            <div class="mystery-badge premium">
+                                <i class="fas fa-crown"></i>
+                                Limited Edition
+                            </div>
+                            <div class="mystery-badge limited">
+                                <i class="fas fa-fire"></i>
+                                Only 50 Left
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mystery-box-body">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6">
+                                <h2 class="mystery-box-title">
+                                    <span class="text-premium">Mystery Tech Box</span>
+                                </h2>
+                                <p class="mystery-box-description">
+                                    Unbox premium gadgets worth up to ₹50,000. Every box is a surprise curated by our tech experts!
+                                </p>
+                                
+                                <div class="mystery-features">
+                                    <div class="mystery-feature">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Guaranteed minimum value of ₹25,000</span>
+                                    </div>
+                                    <div class="mystery-feature">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Premium brands like Apple, Samsung, Sony & more</span>
+                                    </div>
+                                    <div class="mystery-feature">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Free express delivery across Hisar</span>
+                                    </div>
+                                    <div class="mystery-feature">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>30-day money-back guarantee</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mystery-box-price-container">
+                                    <span class="mystery-box-price">₹15,999</span>
+                                    <span class="mystery-box-original-price">₹25,000</span>
+                                    <span class="mystery-box-discount">36% OFF</span>
+                                </div>
+                                
+                                <div class="mystery-box-actions">
+                                    <a href="mysterybox.html" class="btn-mystery-primary flex-fill">
+                                        <i class="fas fa-magic me-2"></i>
+                                        Get Mystery Box
+                                    </a>
+                                    <button class="btn-mystery-secondary flex-fill">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        Learn More
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mystery-box-visual">
+                                    <div class="mystery-box-image">
+                                        <img src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                             alt="Mystery Tech Box" 
+                                             class="img-fluid">
+                                    </div>
+                                    
+                                    <div class="mystery-float-item top-left animate-float">
+                                        <i class="fas fa-mobile-alt text-primary"></i>
+                                    </div>
+                                    
+                                    <div class="mystery-float-item top-right animate-float animation-delay-1">
+                                        <i class="fas fa-headphones text-success"></i>
+                                    </div>
+                                    
+                                    <div class="mystery-float-item bottom-left animate-float animation-delay-2">
+                                        <i class="fas fa-laptop text-warning"></i>
+                                    </div>
+                                    
+                                    <div class="mystery-float-item bottom-right animate-float animation-delay-3">
+                                        <i class="fas fa-camera text-danger"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="badge bg-primary fs-6 mb-3">
-                                <i class="fas fa-magic me-1"></i>
-                                Mystery Box Collection
-                            </div>
-                            <h2 class="display-4 fw-bold mb-3">
-                                Premium Tech <span class="text-accent">Mystery Box</span>
-                            </h2>
-                            <p class="lead mb-4 opacity-90">
-                                Unbox the unexpected! Each mystery box contains premium gadgets worth up to ₹50,000. 
-                                From flagship smartphones to high-end audio gear - every box is a surprise adventure.
-                            </p>
-                            
-                            <ul class="mystery-features">
-                                <li>
-                                    <i class="fas fa-gift"></i>
-                                    <span>Premium gadgets worth 3-5x the box price</span>
-                                </li>
-                                <li>
-                                    <i class="fas fa-certificate"></i>
-                                    <span>100% authentic products with full warranty</span>
-                                </li>
-                                <li>
-                                    <i class="fas fa-surprise"></i>
-                                    <span>Curated selection of trending tech items</span>
-                                </li>
-                                <li>
-                                    <i class="fas fa-shipping-fast"></i>
-                                    <span>Free express delivery across India</span>
-                                </li>
-                            </ul>
-
-                            <div class="d-flex align-items-center mb-4">
-                                <div class="me-4">
-                                    <span class="h1 fw-bold text-white mb-0">₹15,999</span>
-                                    <span class="h4 text-light opacity-75 text-decoration-line-through ms-2">₹25,000</span>
+                        
+                        <div class="mystery-brands">
+                            <h4>What Could Be In Your Box?</h4>
+                            <div class="brand-items">
+                                <div class="brand-item">
+                                    <i class="fab fa-apple text-dark"></i>
                                 </div>
-                                <div class="badge bg-success fs-5 px-3 py-2">
-                                    <i class="fas fa-percentage me-1"></i>
-                                    36% OFF
+                                <div class="brand-item">
+                                    <i class="fab fa-samsung text-primary"></i>
                                 </div>
-                            </div>
-
-                            <div class="d-flex flex-wrap gap-3 mb-4">
-                                <button class="btn btn-warning btn-lg text-dark fw-bold" data-bs-toggle="modal" data-bs-target="#loginRequiredModal">
-                                    <i class="fas fa-magic me-2"></i>
-                                    Get Your Mystery Box
-                                </button>
-                                <button class="btn btn-outline-light btn-lg">
-                                    <i class="fas fa-eye me-2"></i>
-                                    Watch Unboxing Videos
-                                </button>
-                            </div>
-
-                            <div class="row text-center">
-                                <div class="col-4">
-                                    <div class="fw-bold h5 text-warning">1000+</div>
-                                    <div class="small opacity-75">Boxes Sold</div>
+                                <div class="brand-item">
+                                    <i class="fab fa-sony text-dark"></i>
                                 </div>
-                                <div class="col-4">
-                                    <div class="fw-bold h5 text-warning">4.9/5</div>
-                                    <div class="small opacity-75">Happy Customers</div>
+                                <div class="brand-item">
+                                    <i class="fab fa-google text-danger"></i>
                                 </div>
-                                <div class="col-4">
-                                    <div class="fw-bold h5 text-warning">24hrs</div>
-                                    <div class="small opacity-75">Express Delivery</div>
+                                <div class="brand-item">
+                                    <i class="fas fa-headphones text-success"></i>
                                 </div>
                             </div>
                         </div>
@@ -1538,161 +2142,134 @@
                 </div>
             </div>
         </section>
-
+        
+        <section class="newsletter-section">
+            <div class="container">
+                <div class="newsletter-content">
+                    <h2 class="fw-bold mb-3">Stay Updated</h2>
+                    <p class="mb-4">Subscribe to our newsletter for the latest deals and product launches</p>
+                    <form class="newsletter-form">
+                        <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane me-2"></i>
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
     </main>
-
+    
     <footer class="footer">
         <div class="container">
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6">
-                    <div class="mb-4">
-                        <h3 class="font-display fw-bold mb-3">
-                            <i class="fas fa-microchip me-2 text-primary"></i>
-                            gadgetNukkad
-                        </h3>
-                        <p class="mb-4 opacity-75">
-                            Hisar's premier destination for cutting-edge technology. We bring you authenticated 
-                            premium gadgets, expert guidance, and unmatched customer service since 2019.
-                        </p>
-                        <div class="social-links">
-                            <a href="#" class="social-link" aria-label="Facebook">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a href="#" class="social-link" aria-label="Instagram">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="#" class="social-link" aria-label="Twitter">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a href="#" class="social-link" aria-label="YouTube">
-                                <i class="fab fa-youtube"></i>
-                            </a>
-                            <a href="#" class="social-link" aria-label="WhatsApp">
-                                <i class="fab fa-whatsapp"></i>
-                            </a>
-                        </div>
+                    <h3 class="h5 fw-bold mb-3">
+                        <i class="fas fa-microchip me-2 text-primary"></i>
+                        gadgetNukkad
+                    </h3>
+                    <p class="mb-3 opacity-75">
+                        Hisar's premier destination for premium technology since 2019.
+                    </p>
+                    <div class="d-flex gap-2">
+                        <a href="#" class="btn btn-outline-light btn-sm">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-light btn-sm">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-light btn-sm">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
                     </div>
                 </div>
                 
                 <div class="col-lg-2 col-md-3 col-sm-6">
-                    <h5><i class="fas fa-shopping-bag me-2"></i>Shop</h5>
+                    <h5>Shop</h5>
                     <ul class="footer-links">
-                        <li><a href="#mobiles"><i class="fas fa-mobile-alt me-2"></i>Mobiles</a></li>
-                        <li><a href="#audio"><i class="fas fa-headphones me-2"></i>Audio</a></li>
-                        <li><a href="#kitchen"><i class="fas fa-utensils me-2"></i>Kitchen</a></li>
-                        <li><a href="#smart-home"><i class="fas fa-home me-2"></i>Smart Home</a></li>
-                        <li><a href="#gaming"><i class="fas fa-gamepad me-2"></i>Gaming</a></li>
-                        <li><a href="#accessories"><i class="fas fa-plug me-2"></i>Accessories</a></li>
+                        <li><a href="#mobiles">Mobiles</a></li>
+                        <li><a href="#audio">Audio</a></li>
+                        <li><a href="#kitchen">Kitchen</a></li>
+                        <li><a href="#smart-home">Smart Home</a></li>
+                        <li><a href="#gaming">Gaming</a></li>
+                        <li><a href="mysterybox.html">Mystery Box</a></li>
                     </ul>
                 </div>
                 
                 <div class="col-lg-2 col-md-3 col-sm-6">
-                    <h5><i class="fas fa-user-friends me-2"></i>Customer Care</h5>
+                    <h5>Support</h5>
                     <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-question-circle me-2"></i>Help Center</a></li>
-                        <li><a href="#"><i class="fas fa-truck me-2"></i>Track Order</a></li>
-                        <li><a href="#"><i class="fas fa-undo me-2"></i>Returns</a></li>
-                        <li><a href="#"><i class="fas fa-shield-alt me-2"></i>Warranty</a></li>
-                        <li><a href="#"><i class="fas fa-phone me-2"></i>Contact</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Warranty</a></li>
+                        <li><a href="#">Contact</a></li>
                     </ul>
                 </div>
                 
                 <div class="col-lg-4 col-md-6">
-                    <h5><i class="fas fa-envelope me-2"></i>Stay Connected</h5>
-                    <p class="mb-3 opacity-75">
-                        Get exclusive deals, product launches, and tech insights delivered to your inbox.
-                    </p>
-                    <div class="newsletter-form mb-4">
-                        <div class="input-group">
-                            <input type="email" class="form-control" placeholder="Enter your email" 
-                                   aria-label="Email for newsletter">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-paper-plane me-1"></i>
-                                Subscribe
-                            </button>
-                        </div>
-                    </div>
-                    
-                     <div class="row">
-                        <div class="col-md-6">
-                            <h6 class="fw-bold mb-2">
-                                <i class="fas fa-map-marker-alt me-2 text-primary"></i>
-                                Our Store
-                            </h6>
-                            <p class="opacity-75 small mb-3">
-                                Model Town Market, Near SBI<br>
-                                Hisar, Haryana - 125001<br>
-                                <strong>Open:</strong> 10 AM - 9 PM
+                    <h5>Contact Info</h5>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p class="mb-2">
+                                <i class="fas fa-map-marker-alt me-1 text-primary"></i>
+                                Model Town Market<br>
+                                Hisar, Haryana - 125001
                             </p>
                         </div>
-                        <div class="col-md-6">
-                           <h6 class="fw-bold mb-2">
-                                <i class="fas fa-phone-alt me-2 text-primary"></i>
-                                Quick Contact
-                            </h6>
-                            <p class="opacity-75 small mb-0">
-                                <strong>Sales:</strong> +91 98765 43210<br>
-                                <strong>Support:</strong> +91 98765 43211<br>
+                        <div class="col-sm-6">
+                            <p class="mb-2">
+                                <i class="fas fa-phone me-1 text-primary"></i>
+                                Sales: +91 98765 43210<br>
+                                Support: +91 98765 43211
                             </p>
                         </div>
                     </div>
+                    <p class="opacity-75 mb-0">Open: 10 AM - 9 PM (Mon-Sun)</p>
                 </div>
             </div>
             
-            <hr class="my-4 opacity-25">
-            
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="mb-md-0 opacity-75">
-                        © 2025 gadgetNukkad. All rights reserved. Designed with ❤️ for tech enthusiasts in Hisar.
-                    </p>
-                </div>
-                <div class="col-md-6">
-                    <div class="d-flex justify-content-md-end gap-4 mt-3 mt-md-0">
-                        <a href="#" class="text-light opacity-75 text-decoration-none">
-                            <i class="fas fa-shield-alt me-1"></i>Privacy Policy
-                        </a>
-                        <a href="#" class="text-light opacity-75 text-decoration-none">
-                            <i class="fas fa-file-contract me-1"></i>Terms of Service
-                        </a>
-                    </div>
-                </div>
+            <div class="footer-bottom">
+                <p class="mb-0 opacity-75">
+                    © 2025 gadgetNukkad. All rights reserved.
+                </p>
             </div>
         </div>
     </footer>
-
+    
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Premium Product Data with Rich Details
+            // Product Database
             const productDatabase = {
                 mobiles: [
                     { name: "iPhone 15 Pro Max", price: "₹1,34,900", originalPrice: "₹1,59,900", image: "https://gogizmo.in/wp-content/uploads/2024/08/iPhone-15-Pro-Max-Black-Titanium1.png", rating: 4.9, reviews: 2847, discount: 16 },
                     { name: "Samsung Galaxy S24 Ultra", price: "₹1,29,999", originalPrice: "₹1,49,999", image: "https://img-prd-pim.poorvika.com/cdn-cgi/image/width=500,height=500,quality=75/product/Samsung-galaxy-s24-ultra-5g-titanium-black-12gb-512gb-Front-Back-View.png", rating: 4.8, reviews: 1923, discount: 13 },
-                    { name: "MacBook Pro 14\" M3", price: "₹1,69,900", originalPrice: "₹1,99,900", image: "https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/309728_0_vmd0bg.png", rating: 4.9, reviews: 1456, discount: 15 },
-                    { name: "iPad Pro 12.9\" M2", price: "₹1,12,900", originalPrice: "₹1,29,900", image: "https://images.vodafone.co.uk/gbnnsauqav4t/FUNw80hKhR909SLf8iRwW/8bf90af93645ce33b250b75018f50d5b/Samsung_Galaxy_S25_Ultra_titanium_silverblue-full-product-front-600_v2.png", rating: 4.8, reviews: 987, discount: 13 },
                     { name: "OnePlus 12 Pro", price: "₹64,999", originalPrice: "₹79,999", image: "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/304447_0_rc5ep1.png", rating: 4.7, reviews: 1654, discount: 19 },
                     { name: "Google Pixel 8 Pro", price: "₹84,999", originalPrice: "₹1,06,999", image: "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/309165_0_gvylu0.png?tr=w-600", rating: 4.6, reviews: 876, discount: 21 },
-                    { name: "Nothing Phone 2", price: "₹44,999", originalPrice: "₹52,999", image: "https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/316736_0_d8rbhd.png", rating: 4.5, reviews: 1234, discount: 15 }
+                    { name: "Nothing Phone 2", price: "₹44,999", originalPrice: "₹52,999", image: "https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/316736_0_d8rbhd.png", rating: 4.5, reviews: 1234, discount: 15 },
+                    { name: "Xiaomi 14 Ultra", price: "₹89,999", originalPrice: "₹99,999", image: "https://cdn.dxomark.com/wp-content/uploads/medias/post-161419/Xiaomi-14-Ultra_featured-image-packshot-review.jpg", rating: 4.6, reviews: 987, discount: 10 }
                 ],
                 audio: [
-                    { name: "Sony WH-1000XM5 ANC Headphones", price: "₹29,990", originalPrice: "₹34,990", image: "https://m.media-amazon.com/images/I/51aXvjzcukL._UF1000,1000_QL80_.jpg", rating: 4.9, reviews: 3421, discount: 14 },
+                    { name: "Sony WH-1000XM5", price: "₹29,990", originalPrice: "₹34,990", image: "https://m.media-amazon.com/images/I/51aXvjzcukL._UF1000,1000_QL80_.jpg", rating: 4.9, reviews: 3421, discount: 14 },
                     { name: "Apple AirPods Pro 2nd Gen", price: "₹24,900", originalPrice: "₹29,900", image: "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/og-airpods-4-202409?wid=1200&hei=630&fmt=jpeg&qlt=90&.v=1724144134014", rating: 4.8, reviews: 2897, discount: 17 },
-                    { name: "Marshall Acton III Speaker", price: "₹24,999", originalPrice: "₹29,999", image: "https://m.media-amazon.com/images/I/815nga8GBqL._UF1000,1000_QL80_.jpg", rating: 4.7, reviews: 1234, discount: 17 },
-                    { name: "Bose QuietComfort Earbuds", price: "₹26,500", originalPrice: "₹29,500", image: "https://m.media-amazon.com/images/I/51wzLbD7pxL._UF1000,1000_QL80_.jpg", rating: 4.8, reviews: 1876, discount: 10 },
-                    { name: "JBL Charge 5 Speaker", price: "₹12,999", originalPrice: "₹15,999", image: "https://media.tatacroma.com/Croma%20Assets/Entertainment/Speakers%20and%20Media%20Players/Images/274271_iqem50.png", rating: 4.6, reviews: 2543, discount: 19 },
-                    { name: "Sennheiser HD 660S2", price: "₹54,990", originalPrice: "₹64,990", image: "https://media.tatacroma.com/Croma%20Assets/Entertainment/Headphones%20and%20Earphones/Images/260946_0_smvhnx.png", rating: 4.9, reviews: 654, discount: 15 },
-                    { name: "Audio-Technica ATH-M50xBT2", price: "₹18,999", originalPrice: "₹22,999", image: "https://media.tatacroma.com/Croma%20Assets/Entertainment/Wireless%20Earbuds/Images/303134_0_l612i6.png", rating: 4.7, reviews: 1876, discount: 17 }
+                    { name: "Marshall Acton III", price: "₹24,999", originalPrice: "₹29,999", image: "https://m.media-amazon.com/images/I/815nga8GBqL._UF1000,1000_QL80_.jpg", rating: 4.7, reviews: 1234, discount: 17 },
+                    { name: "Bose QuietComfort", price: "₹26,500", originalPrice: "₹29,500", image: "https://m.media-amazon.com/images/I/51wzLbD7pxL._UF1000,1000_QL80_.jpg", rating: 4.8, reviews: 1876, discount: 10 },
+                    { name: "JBL Charge 5", price: "₹12,999", originalPrice: "₹15,999", image: "https://media.tatacroma.com/Croma%20Assets/Entertainment/Speakers%20and%20Media%20Players/Images/274271_iqem50.png", rating: 4.6, reviews: 2543, discount: 19 },
+                    { name: "Sennheiser HD 660S2", price: "₹54,990", originalPrice: "₹64,990", image: "https://media.tatacroma.com/Croma%20Assets/Entertainment/Headphones%20and%20Earphones/Images/260946_0_smvhnx.png", rating: 4.9, reviews: 654, discount: 15 }
                 ],
                 kitchen: [
-                    { name: "Ninja Foodi 9-in-1 Air Fryer", price: "₹28,999", originalPrice: "₹36,999", image: "https://media.tatacroma.com/Croma%20Assets/Small%20Appliances/Fryers%20and%20Grills/Images/300589_0_uobrq8.png", rating: 4.7, reviews: 1432, discount: 22 },
+                    { name: "Ninja Foodi Air Fryer", price: "₹28,999", originalPrice: "₹36,999", image: "https://media.tatacroma.com/Croma%20Assets/Small%20Appliances/Fryers%20and%20Grills/Images/300589_0_uobrq8.png", rating: 4.7, reviews: 1432, discount: 22 },
                     { name: "Vitamix A3500 Blender", price: "₹45,999", originalPrice: "₹52,999", image: "https://crdms.images.consumerreports.org/prod/products/cr/models/393893-blenders-vitamix-ascentseriesa3500.png", rating: 4.9, reviews: 876, discount: 13 },
-                    { name: "Instant Pot Pro Smart Cooker", price: "₹18,999", originalPrice: "₹24,999", image: "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Small%20Appliances/Steamers%20Cookers/Images/251576_0_f1lvsy.png?tr=w-600", rating: 4.6, reviews: 2341, discount: 24 },
-                    { name: "Breville Smart Oven Air Fryer", price: "₹28,999", originalPrice: "₹34,999", image: "https://media.tatacroma.com/Croma%20Assets/Small%20Appliances/Fryers%20and%20Grills/Images/307646_0_zhzm8w.png", rating: 4.8, reviews: 654, discount: 17 },
+                    { name: "Instant Pot Pro", price: "₹18,999", originalPrice: "₹24,999", image: "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Small%20Appliances/Steamers%20Cookers/Images/251576_0_f1lvsy.png?tr=w-600", rating: 4.6, reviews: 2341, discount: 24 },
+                    { name: "Breville Smart Oven", price: "₹28,999", originalPrice: "₹34,999", image: "https://media.tatacroma.com/Croma%20Assets/Small%20Appliances/Fryers%20and%20Grills/Images/307646_0_zhzm8w.png", rating: 4.8, reviews: 654, discount: 17 },
                     { name: "KitchenAid Stand Mixer", price: "₹38,999", originalPrice: "₹45,999", image: "https://www.kitchenaid.com/is/image/content/dam/business-unit/kitchenaid/en-us/marketing-content/site-assets/page-content/pinspiration/stand-mixer-attachments/KSM150PSER_Lifestyle_1.tif", rating: 4.8, reviews: 1234, discount: 15 },
-                    { name: "Dyson V15 Detect Vacuum", price: "₹54,900", originalPrice: "₹64,900", image: "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/products/vacuums/v15-detect/overview/dyson-v15-detect-vacuum-yellow-nickel-overview.png", rating: 4.9, reviews: 987, discount: 15 }
+                    { name: "Philips Air Fryer XXL", price: "₹19,999", originalPrice: "₹24,999", image: "https://media.tatacroma.com/Croma%20Assets/Small%20Appliances/Fryers%20and%20Grills/Images/272052_0_l7kq7x.png", rating: 4.6, reviews: 1876, discount: 20 }
                 ]
             };
             
@@ -1704,123 +2281,135 @@
                 for (let i = 0; i < fullStars; i++) {
                     starsHtml += '<i class="fas fa-star star"></i>';
                 }
+                
                 if (hasHalfStar) {
                     starsHtml += '<i class="fas fa-star-half-alt star"></i>';
                 }
+                
                 const emptyStars = 5 - Math.ceil(rating);
                 for (let i = 0; i < emptyStars; i++) {
                     starsHtml += '<i class="far fa-star star" style="color: #d1d5db;"></i>';
                 }
                 return starsHtml;
             }
-
-            // Product Card Creation
+            
+            // Product Card Creator (Mobile Friendly)
             function createProductCard(product) {
+                const stars = generateStars(product.rating);
                 return `
-                    <div class="swiper-slide">
-                        <div class="product-card">
-                            <div class="product-image-container">
-                                <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.src='https://via.placeholder.com/300x250/f1f5f9/64748b?text=Product+Image'">
-                                ${product.discount ? `<div class="product-badge"><i class="fas fa-bolt me-1"></i>${product.discount}% OFF</div>` : ''}
-                                <div class="product-actions">
-                                    <button class="btn btn-primary btn-sm flex-grow-1" data-bs-toggle="modal" data-bs-target="#loginRequiredModal">
-                                        <i class="fas fa-shopping-cart me-1"></i>Add to Cart
-                                    </button>
-                                    <button class="btn btn-outline-secondary btn-sm" title="Add to Wishlist" data-bs-toggle="modal" data-bs-target="#loginRequiredModal">
-                                        <i class="fas fa-heart"></i>
-                                    </button>
+                <div class="swiper-slide h-auto">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="${product.image}" alt="${product.name}" class="product-image">
+                            ${product.discount ? `
+                                <div class="product-badge">
+                                    ${product.discount}% OFF
                                 </div>
+                            ` : ''}
+                        </div>
+                        <div class="product-info">
+                            <a href="#" class="product-title">${product.name}</a>
+                            <div class="product-rating">
+                                <div class="stars">${stars}</div>
+                                <span class="rating-text">(${product.reviews})</span>
                             </div>
-                            <div class="product-info">
-                                <a href="#" class="product-title">${product.name}</a>
-                                <div class="product-rating">
-                                    <div class="stars">${generateStars(product.rating)}</div>
-                                    <span class="rating-text">(${product.reviews.toLocaleString()})</span>
-                                </div>
-                                <div class="product-price">
-                                    <span class="price-current">${product.price}</span>
-                                    ${product.originalPrice ? `<span class="price-original">${product.originalPrice}</span>` : ''}
-                                </div>
+                            <div class="product-price">
+                                <span class="price-current">${product.price}</span>
+                                ${product.originalPrice ? `<span class="price-original">${product.originalPrice}</span>` : ''}
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-add-cart" data-bs-toggle="modal" data-bs-target="#loginRequiredModal">
+                                    <i class="fas fa-shopping-cart"></i>Add
+                                </button>
+                                <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#loginRequiredModal" title="Add to Wishlist">
+                                    <i class="fas fa-heart"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
+                </div>
                 `;
             }
-
-            // Populate Product Sections
-            function populateCarousel(sectionId, products) {
-                const container = document.getElementById(`${sectionId}-products`);
-                if (container) {
-                    container.innerHTML = products.map(createProductCard).join('');
+            
+            // Populate Carousels
+            function populateCarousel(category, containerId) {
+                const container = document.getElementById(containerId);
+                if (container && productDatabase[category]) {
+                    container.innerHTML = productDatabase[category].map(createProductCard).join('');
                 }
             }
             
-            populateCarousel('mobiles', productDatabase.mobiles);
-            populateCarousel('audio', productDatabase.audio);
-            populateCarousel('kitchen', productDatabase.kitchen);
-
-            // Initialize Swiper Carousels with responsive breakpoints
-            function initSwiper(selector) {
-                return new Swiper(selector, {
+            // Initialize Swipers
+            ['mobiles', 'audio', 'kitchen'].forEach(category => {
+                populateCarousel(category, `${category}-products`);
+                new Swiper(`#${category}-swiper`, {
                     slidesPerView: 'auto',
-                    spaceBetween: 24,
-                    grabCursor: true,
-                    loop: true,
-                    autoplay: {
-                        delay: 5000,
-                        disableOnInteraction: false,
+                    spaceBetween: 20,
+                    freeMode: true,
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
                     },
                     breakpoints: {
-                        // Mobile: 2 items
-                        320: { slidesPerView: 2, spaceBetween: 16 },
-                        576: { slidesPerView: 2.2, spaceBetween: 16 },
-                        // Tablet: 4 items
-                        768: { slidesPerView: 4, spaceBetween: 20 },
-                        992: { slidesPerView: 4.5, spaceBetween: 24 },
-                        // Desktop: 6 items
-                        1200: { slidesPerView: 6, spaceBetween: 24 },
-                        1400: { slidesPerView: 6.5, spaceBetween: 24 },
+                        320: {
+                            slidesPerView: 2,
+                            spaceBetween: 10
+                        },
+                        768: {
+                            slidesPerView: 3,
+                            spaceBetween: 15
+                        },
+                        1024: {
+                            slidesPerView: 4,
+                            spaceBetween: 20
+                        },
+                        1200: {
+                            slidesPerView: 5,
+                            spaceBetween: 20
+                        }
                     }
                 });
-            }
-
-            initSwiper('#mobiles-swiper');
-            initSwiper('#audio-swiper');
-            initSwiper('#kitchen-swiper');
-
-            // Countdown Timer
-            const countdown = () => {
-                const countDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 4).getTime();
-                const now = new Date().getTime();
-                const gap = countDate - now;
-                if (gap < 0) return;
-                const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
-                const days = document.getElementById('days');
-                const hours = document.getElementById('hours');
-                const minutes = document.getElementById('minutes');
-                const seconds = document.getElementById('seconds');
-                
-                if (days) days.innerText = String(Math.floor(gap/day)).padStart(2,'0');
-                if (hours) hours.innerText = String(Math.floor((gap%day)/hour)).padStart(2,'0');
-                if (minutes) minutes.innerText = String(Math.floor((gap%hour)/minute)).padStart(2,'0');
-                if (seconds) seconds.innerText = String(Math.floor((gap%minute)/second)).padStart(2,'0');
-            };
+            });
             
-            // Initialize countdown and update every second
-            countdown();
-            setInterval(countdown, 1000);
-
-            // Smooth scrolling for navigation links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
+            // Countdown Timer
+            function startCountdown() {
+                const countdownDate = new Date().getTime() + (3 * 24 * 60 * 60 * 1000) + (14 * 60 * 60 * 1000);
+                const timer = setInterval(function() {
+                    const now = new Date().getTime();
+                    const distance = countdownDate - now;
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    
+                    document.getElementById("days").innerText = String(days).padStart(2, '0');
+                    document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+                    document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+                    document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+                    if (distance < 0) {
+                        clearInterval(timer);
+                        document.getElementById("countdown-timer").innerHTML = "<div class='text-danger fw-bold'>Offer Expired</div>";
                     }
+                }, 1000);
+            }
+            startCountdown();
+            
+            // Back to Top Button
+            const backToTopButton = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
                 });
             });
         });
